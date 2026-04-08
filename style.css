@@ -526,3 +526,12 @@ background:#1C1C1C;
 .corCinza{
 background:#4A4A4A;
 }
+
+footer{
+margin:auto;
+
+font-family:'Cardo', serif;
+font-style:italic;
+font-size:25px;
+line-height:1.7;
+}
