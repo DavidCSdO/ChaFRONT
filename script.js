@@ -16,7 +16,7 @@ seta.classList.toggle("girar")
 
 })
 
-/* COMPARTILHAR NO WHATSAPP */
+/* COMPARTILHAR WHATSAPP */
 
 btnCompartilhar.addEventListener("click", () => {
 
@@ -32,6 +32,8 @@ window.open(`https://wa.me/?text=${texto}`, "_blank")
 
 async function carregarPresentes(){
 
+try{
+
 const res = await fetch(`${API}/presentes`)
 const data = await res.json()
 
@@ -39,8 +41,14 @@ todosPresentes = data
 
 renderizarPresentes(data)
 
+}catch(e){
+
+console.error(e)
+alert("Erro ao carregar a lista de presentes")
+
 }
 
+}
 function renderizarPresentes(listaPresentes){
 
 const ul = document.getElementById("presentes")
@@ -81,16 +89,39 @@ if(p.escolhido){
 li.classList.add("presenteEscolhido")
 }
 
+/* CORES SUGERIDAS */
+
+let coresHTML = ""
+
+if(p.cores && p.cores.length){
+
+coresHTML = `
+<div class="coresSugestao">
+
+${p.cores.map(c =>
+`<span class="corItem" style="background:${c}"></span>`
+).join("")}
+
+</div>
+`
+
+}
+
 li.innerHTML = `
 
 <div class="infoPresente">
 
 <span class="icone">🎁</span>
 
-<span class="nomePresente">
+<div class="nomePresente">
+
 ${p.nome}
+
+${coresHTML}
+
 ${p.escolhido ? `<small> — escolhido por ${p.escolhido_por}</small>` : ""}
-</span>
+
+</div>
 
 </div>
 
@@ -110,7 +141,7 @@ ul.appendChild(li)
 
 }
 
-/* BUSCA EM TEMPO REAL */
+/* BUSCA */
 
 campoBusca.addEventListener("input", () => {
 
@@ -130,7 +161,7 @@ const nome = prompt("Digite seu nome")
 
 if(!nome) return
 
-await fetch(`${API}/presentes/${id}/escolher`,{
+const res = await fetch(`${API}/presentes/${id}/escolher`,{
 
 method:"POST",
 
@@ -141,6 +172,18 @@ headers:{
 body:JSON.stringify({nome})
 
 })
+
+if(res.ok){
+
+alert("🎉 Presente reservado com sucesso!")
+
+}else{
+
+const erro = await res.json()
+
+alert(erro.erro || "Erro ao escolher presente")
+
+}
 
 carregarPresentes()
 

@@ -5,6 +5,8 @@ background:#f3f3f3;
 text-align:center;
 }
 
+/* HEADER */
+
 header{
 background:#FBEAFF;
 padding:10px;
@@ -15,12 +17,13 @@ margin:0 20px;
 font-size:25px;
 }
 
+/* HERO */
+
 .hero{
 margin-top:80px;
 }
 
 .iniciais{
-font-family:'Great Vibes', cursive;
 font-size:90px;
 }
 
@@ -38,8 +41,7 @@ line-height:1.7;
 
 }
 
-
-/* BOTÃO PRINCIPAL (Lista de presentes) */
+/* BOTÃO PRINCIPAL */
 
 .botao{
 
@@ -77,7 +79,6 @@ box-shadow:0px 10px 18px rgba(0,0,0,0.12);
 
 }
 
-
 /* LISTA */
 
 .lista{
@@ -103,21 +104,22 @@ margin:auto;
 
 .dropdownLista.ativo{
 
-max-height:500px;
+max-height:600px;
 overflow-y:auto;
 opacity:1;
 
 }
-
 
 /* LISTA DE PRESENTES */
 
 #presentes{
 
 list-style:none;
-font-family: 'cardo', serif;
-font-style: italic;
-font-size: 20px;
+
+font-family:'Cardo', serif;
+font-style:italic;
+font-size:20px;
+
 padding:0;
 
 max-width:500px;
@@ -130,8 +132,7 @@ gap:14px;
 
 }
 
-
-/* CARD DO PRESENTE */
+/* CARD PRESENTE */
 
 .cardPresente{
 
@@ -160,41 +161,64 @@ box-shadow:0px 10px 20px rgba(0,0,0,0.12);
 
 }
 
-
-/* AGRUPA ICONE + NOME */
+/* ICONE + NOME */
 
 .infoPresente{
 
 display:flex;
-
 align-items:center;
-
 gap:10px;
 
 }
 
-
-/* ÍCONE */
-
 .icone{
-
 font-size:20px;
-
 }
 
-
-/* NOME DO PRESENTE */
+/* NOME + CORES */
 
 .nomePresente{
 
 font-family:'Cardo', serif;
-
 font-size:18px;
+
+display:flex;
+flex-direction:column;
 
 }
 
+/* CORES SUGERIDAS */
 
-/* BOTÃO */
+.coresSugestao{
+
+display:flex;
+gap:6px;
+margin-top:6px;
+
+}
+
+.corItem{
+
+width:16px;
+height:16px;
+
+border-radius:50%;
+
+border:1px solid #ccc;
+
+box-shadow:0 1px 3px rgba(0,0,0,0.15);
+
+transition:transform 0.15s ease;
+
+}
+
+.corItem:hover{
+
+transform:scale(1.2);
+
+}
+
+/* BOTÃO ESCOLHER */
 
 .botaoEscolher{
 
@@ -217,9 +241,7 @@ transition:transform 0.2s ease;
 }
 
 .botaoEscolher:hover{
-
 transform:scale(1.05);
-
 }
 
 .botaoEscolher:disabled{
@@ -228,37 +250,6 @@ background:#ccc;
 cursor:not-allowed;
 
 }
-
-
-/* BOTÃO ESCOLHER PRESENTE */
-
-.botaoEscolher{
-
-background:#7fbf7f;
-border:none;
-padding:8px 14px;
-color:white;
-cursor:pointer;
-
-border-radius:6px;
-
-transition:background 0.2s ease;
-
-}
-
-.botaoEscolher:hover{
-
-background:#6aa96a;
-
-}
-
-.botaoEscolher:disabled{
-
-background:#ccc;
-cursor:not-allowed;
-
-}
-
 
 /* LOGO */
 
@@ -272,112 +263,35 @@ margin-bottom:-10%;
 
 }
 
-
-/* SETA DO DROPDOWN */
+/* SETA DROPDOWN */
 
 #seta{
 
 display:inline-block;
 margin-left:10px;
 
-transition: transform 0.3s ease;
+transition:transform 0.3s ease;
 
 }
 
 #seta.girar{
-
-transform: rotate(180deg);
-
+transform:rotate(180deg);
 }
 
-
-@media (max-width:768px){
-
-.hero{
-margin-top:40px;
-}
-
-.iniciais{
-font-size:60px;
-}
-
-.texto{
-
-font-size:20px;
-width:90%;
-
-}
-
-nav a{
-font-size:18px;
-margin:0 10px;
-}
-
-.botao{
-font-size:18px;
-padding:14px 28px;
-}
-
-.cardPresente{
-
-padding:14px;
-
-}
-
-.nomePresente{
-
-font-size:16px;
-
-}
-
-.logo{
-
-width:100%;
-max-width:none;
-
-margin-top:-5%;
-margin-bottom:-5%;
-
-}   
-
-}
-
+/* CONTADOR */
 
 #contadorPresentes{
 
 margin-top:15px;
+
 font-family:'Cardo', serif;
 font-size:18px;
+
 color:#555;
 
 }
 
-
-/* animação quando escolhido */
-
-.presenteEscolhido{
-
-animation: escolhidoAnimacao 0.6s ease;
-
-}
-
-@keyframes escolhidoAnimacao{
-
-0%{
-transform:scale(1);
-}
-
-50%{
-transform:scale(1.05);
-background:#e8ffe8;
-}
-
-100%{
-transform:scale(1);
-}
-
-}
-
+/* CAMPO BUSCA */
 
 .campoBusca{
 
@@ -399,6 +313,8 @@ box-shadow:0px 3px 8px rgba(0,0,0,0.05);
 
 }
 
+/* BOTÃO WHATSAPP */
+
 .botaoCompartilhar{
 
 margin-top:10px;
@@ -419,13 +335,15 @@ cursor:pointer;
 
 box-shadow:0px 5px 12px rgba(0,0,0,0.1);
 
+transition:transform 0.2s ease;
+
 }
 
 .botaoCompartilhar:hover{
-
 transform:translateY(-2px);
-
 }
+
+/* PROGRESSO */
 
 .containerProgresso{
 
@@ -460,8 +378,74 @@ height:100%;
 
 width:0%;
 
-background:linear-gradient(90deg,#ff7a7a,#ff4d4d);
+background:linear-gradient(90deg,#D98793,#8c8c8c);
 
 transition:width 0.4s ease;
+
+}
+
+/* ANIMAÇÃO ESCOLHIDO */
+
+.presenteEscolhido{
+animation:escolhidoAnimacao 0.6s ease;
+}
+
+@keyframes escolhidoAnimacao{
+
+0%{transform:scale(1);}
+50%{
+transform:scale(1.05);
+background:#e8ffe8;
+}
+100%{transform:scale(1);}
+
+}
+
+/* RESPONSIVO */
+
+@media (max-width:768px){
+
+.hero{
+margin-top:40px;
+}
+
+.iniciais{
+font-size:60px;
+}
+
+.texto{
+
+font-size:20px;
+width:90%;
+
+}
+
+nav a{
+font-size:18px;
+margin:0 10px;
+}
+
+.botao{
+font-size:18px;
+padding:14px 28px;
+}
+
+.cardPresente{
+padding:14px;
+}
+
+.nomePresente{
+font-size:16px;
+}
+
+.logo{
+
+width:100%;
+max-width:none;
+
+margin-top:-5%;
+margin-bottom:-5%;
+
+}
 
 }
