@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Chá de Panela</title>
+
+<link rel="stylesheet" href="style.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<header>
+
+<nav>
+
+<a>Lista de presentes</a>
+
+</nav>
+
+</header>
+
+<section class="hero">
+
+<img src="assets/logo.png" class="logo" alt="Logo do chá de panela de David e Júlia">
+<p class="texto">
+Estamos preparando um momento muito especial e gostaríamos de compartilhar essa alegria com você! Nosso chá de panela será um tempo de comunhão, risadas e muito carinho entre amigos e familiares.
+Preparamos também uma lista de presentes para quem desejar nos abençoar nessa nova etapa da nossa vida. Sua presença já é o mais importante, mas se quiser contribuir, fique à vontade para escolher um item da lista.
+</p>
+
+<button id="dropdownBtn" class="botao">
+Lista completa de presentes
+<span id="seta">▼</span>
+</button>
+
+<p id="contadorPresentes"></p>
+
+<div class="containerProgresso">
+
+<p id="textoProgresso"></p>
+
+<div class="barraProgresso">
+
+<div id="barraInterna"></div>
+
+</div>
+
+</div>
+
+<button id="btnCompartilhar" class="botaoCompartilhar">
+📲 Compartilhar lista no WhatsApp
+</button>
+
+</section>
+
+<section id="dropdownLista" class="dropdownLista">
+<input
+type="text"
+id="buscaPresente"
+placeholder="🔎 Buscar presente..."
+class="campoBusca">
+<ul id="presentes"></ul>
+
+</section>
+
+<script src="script.js"></script>
+
+</body>
+
+</html>
