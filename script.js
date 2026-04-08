@@ -1,3 +1,5 @@
+const API = "https://chaback-production.up.railway.app/api"
+
 const btn = document.getElementById("dropdownBtn")
 const lista = document.getElementById("dropdownLista")
 const seta = document.getElementById("seta")
@@ -30,7 +32,7 @@ window.open(`https://wa.me/?text=${texto}`, "_blank")
 
 async function carregarPresentes(){
 
-const res = await fetch("http://localhost:3000/api/presentes")
+const res = await fetch(`${API}/presentes`)
 const data = await res.json()
 
 todosPresentes = data
@@ -128,7 +130,7 @@ const nome = prompt("Digite seu nome")
 
 if(!nome) return
 
-await fetch(`http://localhost:3000/api/presentes/${id}/escolher`,{
+await fetch(`${API}/presentes/${id}/escolher`,{
 
 method:"POST",
 
