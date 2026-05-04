@@ -1,4 +1,4 @@
-const API = "https://chaback.onrender.com/api/presentes"
+const API_URL = "https://chaback.onrender.com/api/presentes"
 
 const btn = document.getElementById("dropdownBtn")
 const lista = document.getElementById("dropdownLista")
@@ -34,7 +34,7 @@ async function carregarPresentes(){
 
 try{
 
-const res = await fetch(`${API}/presentes`)
+const res = await fetch(API_URL)
 const data = await res.json()
 
 todosPresentes = data
