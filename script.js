@@ -1,4 +1,4 @@
-const API = "https://chaback-production.up.railway.app/api"
+const API = "https://chaback.onrender.com/api/presentes"
 
 const btn = document.getElementById("dropdownBtn")
 const lista = document.getElementById("dropdownLista")
