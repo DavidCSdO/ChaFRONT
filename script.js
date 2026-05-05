@@ -9,184 +9,160 @@ const btnCompartilhar = document.getElementById("btnCompartilhar")
 
 let todosPresentes = []
 
+/* DROPDOWN */
 btn.addEventListener("click", () => {
-
-lista.classList.toggle("ativo")
-seta.classList.toggle("girar")
-
+  lista.classList.toggle("ativo")
+  seta.classList.toggle("girar")
 })
 
 /* COMPARTILHAR WHATSAPP */
-
 btnCompartilhar.addEventListener("click", () => {
+  const url = window.location.href
 
-const url = window.location.href
+  const texto = encodeURIComponent(
+    "🎁 Confira nossa lista de presentes do chá de panela:\n\n" + url
+  )
 
-const texto = encodeURIComponent(
-"🎁 Confira nossa lista de presentes do chá de panela:\n\n" + url
-)
-
-window.open(`https://wa.me/?text=${texto}`, "_blank")
-
+  window.open(`https://wa.me/?text=${texto}`, "_blank")
 })
 
-async function carregarPresentes(){
+/* CARREGAR PRESENTES */
+async function carregarPresentes() {
+  try {
+    const res = await fetch(API_URL)
 
-try{
+    if (!res.ok) throw new Error("Erro na requisição")
 
-const res = await fetch(API_URL)
-const data = await res.json()
+    const data = await res.json()
 
-todosPresentes = data
+    todosPresentes = data
+    renderizarPresentes(data)
 
-renderizarPresentes(data)
-
-}catch(e){
-
-console.error(e)
-alert("Erro ao carregar a lista de presentes")
-
+  } catch (e) {
+    console.error("Erro ao carregar:", e)
+    alert("Erro ao carregar a lista de presentes")
+  }
 }
 
-}
-function renderizarPresentes(listaPresentes){
+/* RENDERIZAR */
+function renderizarPresentes(listaPresentes) {
 
-const ul = document.getElementById("presentes")
-ul.innerHTML = ""
+  const ul = document.getElementById("presentes")
+  ul.innerHTML = ""
 
-/* ORDENAR DISPONÍVEIS PRIMEIRO */
+  /* ORDENAR: disponíveis primeiro */
+  const ordenados = [...listaPresentes].sort((a, b) => {
+    if (a.escolhido === b.escolhido) return 0
+    return a.escolhido ? 1 : -1
+  })
 
-listaPresentes.sort((a,b)=>{
+  const restantes = ordenados.filter(p => !p.escolhido).length
+  const total = ordenados.length
+  const escolhidos = total - restantes
+  const porcentagem = total ? Math.round((escolhidos / total) * 100) : 0
 
-if(a.escolhido === b.escolhido) return 0
+  document.getElementById("textoProgresso").innerText =
+    `🎉 ${escolhidos} de ${total} presentes já foram escolhidos`
 
-return a.escolhido ? 1 : -1
+  document.getElementById("barraInterna").style.width =
+    `${porcentagem}%`
 
-})
+  document.getElementById("contadorPresentes").innerText =
+    `🎁 ${restantes} presentes ainda disponíveis`
 
-const restantes = listaPresentes.filter(p => !p.escolhido).length
-const total = listaPresentes.length
+  ordenados.forEach(p => {
 
-const escolhidos = total - restantes
+    const li = document.createElement("li")
+    li.className = "cardPresente"
 
-const porcentagem = Math.round((escolhidos / total) * 100)
+    if (p.escolhido) {
+      li.classList.add("presenteEscolhido")
+    }
 
-document.getElementById("textoProgresso").innerText =
-`🎉 ${escolhidos} de ${total} presentes já foram escolhidos`
+    /* CORES */
+    let coresHTML = ""
 
-document.getElementById("barraInterna").style.width =
-`${porcentagem}%`
+    if (p.cores && p.cores.length) {
+      coresHTML = `
+        <div class="coresSugestao">
+          ${p.cores.map(c =>
+            `<span class="corItem" style="background:${c}"></span>`
+          ).join("")}
+        </div>
+      `
+    }
 
-document.getElementById("contadorPresentes").innerText =
-`🎁 ${restantes} presentes ainda disponíveis`
+    li.innerHTML = `
+      <div class="infoPresente">
+        <span class="icone">🎁</span>
 
-listaPresentes.forEach(p=>{
+        <div class="nomePresente">
+          ${p.nome}
+          ${coresHTML}
+          ${p.escolhido ? `<small> — escolhido por ${p.escolhido_por}</small>` : ""}
+        </div>
+      </div>
 
-const li = document.createElement("li")
-li.className = "cardPresente"
+      <button class="botaoEscolher"
+        ${p.escolhido ? "disabled" : ""}
+        data-id="${p.id}">
+        ${p.escolhido ? "Escolhido" : "Escolher"}
+      </button>
+    `
 
-if(p.escolhido){
-li.classList.add("presenteEscolhido")
-}
+    /* EVENTO (melhor que onclick inline) */
+    const botao = li.querySelector(".botaoEscolher")
 
-/* CORES SUGERIDAS */
+    if (!p.escolhido) {
+      botao.addEventListener("click", () => escolher(p.id))
+    }
 
-let coresHTML = ""
-
-if(p.cores && p.cores.length){
-
-coresHTML = `
-<div class="coresSugestao">
-
-${p.cores.map(c =>
-`<span class="corItem" style="background:${c}"></span>`
-).join("")}
-
-</div>
-`
-
-}
-
-li.innerHTML = `
-
-<div class="infoPresente">
-
-<span class="icone">🎁</span>
-
-<div class="nomePresente">
-
-${p.nome}
-
-${coresHTML}
-
-${p.escolhido ? `<small> — escolhido por ${p.escolhido_por}</small>` : ""}
-
-</div>
-
-</div>
-
-<button class="botaoEscolher"
-${p.escolhido ? "disabled" : ""}
-onclick="escolher(${p.id})">
-
-${p.escolhido ? "Escolhido" : "Escolher"}
-
-</button>
-
-`
-
-ul.appendChild(li)
-
-})
-
+    ul.appendChild(li)
+  })
 }
 
 /* BUSCA */
-
 campoBusca.addEventListener("input", () => {
+  const termo = campoBusca.value.toLowerCase()
 
-const termo = campoBusca.value.toLowerCase()
+  const filtrados = todosPresentes.filter(p =>
+    p.nome.toLowerCase().includes(termo)
+  )
 
-const filtrados = todosPresentes.filter(p =>
-p.nome.toLowerCase().includes(termo)
-)
-
-renderizarPresentes(filtrados)
-
+  renderizarPresentes(filtrados)
 })
 
-async function escolher(id){
+/* ESCOLHER PRESENTE */
+async function escolher(id) {
 
-const nome = prompt("Digite seu nome")
+  const nome = prompt("Digite seu nome")
 
-if(!nome) return
+  if (!nome) return
 
-const res = await fetch(`${API}/presentes/${id}/escolher`,{
+  try {
 
-method:"POST",
+    const res = await fetch(`${API_URL}/${id}/escolher`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ nome })
+    })
 
-headers:{
-"Content-Type":"application/json"
-},
+    if (!res.ok) {
+      const erro = await res.json()
+      throw new Error(erro.erro || "Erro ao escolher presente")
+    }
 
-body:JSON.stringify({nome})
+    alert("🎉 Presente reservado com sucesso!")
 
-})
+    await carregarPresentes()
 
-if(res.ok){
-
-alert("🎉 Presente reservado com sucesso!")
-
-}else{
-
-const erro = await res.json()
-
-alert(erro.erro || "Erro ao escolher presente")
-
+  } catch (e) {
+    console.error("Erro ao escolher:", e)
+    alert(e.message)
+  }
 }
 
-carregarPresentes()
-
-}
-
+/* INICIAR */
 carregarPresentes()
