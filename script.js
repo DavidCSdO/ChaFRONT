@@ -20,8 +20,16 @@ let todosPresentes = []
 
 // ─── DROPDOWN ────────────────────────────────────────────
 btn.addEventListener("click", () => {
-  lista.classList.toggle("ativo")
-  seta.classList.toggle("girar")
+  const aberto = lista.classList.contains("ativo")
+  if (aberto) {
+    lista.classList.remove("ativo")
+    lista.style.display = "none"
+    seta.classList.remove("girar")
+  } else {
+    lista.style.display = "block"
+    lista.classList.add("ativo")
+    seta.classList.add("girar")
+  }
 })
 
 // ─── COMPARTILHAR WHATSAPP ────────────────────────────────
