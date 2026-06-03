@@ -185,7 +185,7 @@ async function escolher(id) {
       method: "PATCH",
       headers: {
         ...headers,
-        "Prefer": "return=representation"
+        "Prefer": "return=representation,count=exact"
       },
       body: JSON.stringify({
         escolhido: true,
@@ -194,14 +194,15 @@ async function escolher(id) {
     }
   )
 
-  const data = await res.json()
+const data = await res.json()
 
-  if (!res.ok || data.length === 0) {
-    alert("Este presente já foi escolhido por outra pessoa 😕")
-  } else {
-    alert("🎉 Presente reservado com sucesso!")
-  }
-
+if (res.status === 404 || (Array.isArray(data) && data.length === 0)) {
+  alert("Este presente já foi escolhido por outra pessoa 😕")
+} else if (!res.ok) {
+  alert("Erro ao reservar presente. Tente novamente.")
+} else {
+  alert("🎉 Presente reservado com sucesso!")
+}
   carregarPresentes()
 }
 
