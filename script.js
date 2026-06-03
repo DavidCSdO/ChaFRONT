@@ -86,15 +86,21 @@ function renderizarPresentes(listaPresentes) {
 
     if (p.escolhido) li.classList.add("presenteEscolhido")
 
-    let coresHTML = ""
-    if (p.cores && p.cores.length) {
-      coresHTML = `
-        <div class="coresSugestao">
-          ${p.cores.map(c =>
-            `<span class="corItem" style="background:${c}"></span>`
-          ).join("")}
-        </div>`
-    }
+let coresHTML = ""
+let cores = p.cores
+
+if (typeof cores === "string") {
+  cores = cores.replace(/[{}]/g, "").split(",").map(c => c.trim()).filter(Boolean)
+}
+
+if (cores && cores.length) {
+  coresHTML = `
+    <div class="coresSugestao">
+      ${cores.map(c =>
+        `<span class="corItem" style="background:${c}"></span>`
+      ).join("")}
+    </div>`
+}
 
     li.innerHTML = `
       <div class="infoPresente">
