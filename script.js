@@ -48,6 +48,7 @@ async function carregarPresentes() {
     const data = await res.json()
 
     todosPresentes = data
+    renderizarPaleta(data)
     renderizarPresentes(data)
 
   } catch (e) {
@@ -56,7 +57,51 @@ async function carregarPresentes() {
   }
 }
 
-// ─── RENDERIZAR ───────────────────────────────────────────
+// ─── RENDERIZAR PALETA DE CORES ───────────────────────────
+function renderizarPaleta(listaPresentes) {
+  // Coleta todas as cores únicas da lista
+  const coresUnicas = new Map()
+
+  listaPresentes.forEach(p => {
+    let cores = p.cores
+    if (typeof cores === "string") {
+      cores = cores.replace(/[{}]/g, "").split(",").map(c => c.trim()).filter(Boolean)
+    }
+    if (cores && cores.length) {
+      cores.forEach(c => {
+        if (!coresUnicas.has(c)) coresUnicas.set(c, c)
+      })
+    }
+  })
+
+  const container = document.getElementById("paletaCores")
+  if (!container || coresUnicas.size === 0) return
+
+  // Pega no máximo as 3 primeiras cores únicas
+  const cores = [...coresUnicas.values()].slice(0, 3)
+
+  const nomes = {
+    "#D98793": "Rosa",
+    "#2B2B2B": "Preto",
+    "#4A4A4A": "Grafite",
+    "#FFFFFF": "Branco",
+    "#F5F5F5": "Off-white",
+  }
+
+  container.innerHTML = `
+    <h3>Paleta de cores sugerida</h3>
+    <div class="paletaItens">
+      ${cores.map(c => `
+        <div class="paletaItem">
+          <div class="paletaCirculo" style="background:${c}"></div>
+          <span class="paletaLabel">${nomes[c] || c}</span>
+        </div>
+      `).join("")}
+    </div>
+  `
+}
+
+// ─── RENDERIZAR PRESENTES ─────────────────────────────────
 function renderizarPresentes(listaPresentes) {
   const ul = document.getElementById("presentes")
   ul.innerHTML = ""
@@ -67,7 +112,7 @@ function renderizarPresentes(listaPresentes) {
     return a.escolhido ? 1 : -1
   })
 
-  const total     = listaPresentes.length
+  const total      = listaPresentes.length
   const escolhidos = listaPresentes.filter(p => p.escolhido).length
   const restantes  = total - escolhidos
   const porcentagem = Math.round((escolhidos / total) * 100)
@@ -86,21 +131,20 @@ function renderizarPresentes(listaPresentes) {
 
     if (p.escolhido) li.classList.add("presenteEscolhido")
 
-let coresHTML = ""
-let cores = p.cores
+    let cores = p.cores
+    if (typeof cores === "string") {
+      cores = cores.replace(/[{}]/g, "").split(",").map(c => c.trim()).filter(Boolean)
+    }
 
-if (typeof cores === "string") {
-  cores = cores.replace(/[{}]/g, "").split(",").map(c => c.trim()).filter(Boolean)
-}
-
-if (cores && cores.length) {
-  coresHTML = `
-    <div class="coresSugestao">
-      ${cores.map(c =>
-        `<span class="corItem" style="background:${c}"></span>`
-      ).join("")}
-    </div>`
-}
+    let coresHTML = ""
+    if (cores && cores.length) {
+      coresHTML = `
+        <div class="coresSugestao">
+          ${cores.map(c =>
+            `<span class="corItem" style="background:${c}" title="${c}"></span>`
+          ).join("")}
+        </div>`
+    }
 
     li.innerHTML = `
       <div class="infoPresente">
@@ -108,7 +152,7 @@ if (cores && cores.length) {
         <div class="nomePresente">
           ${p.nome}
           ${coresHTML}
-          ${p.escolhido ? `<small> — escolhido por ${p.escolhido_por}</small>` : ""}
+          ${p.escolhido ? `<small>escolhido por ${p.escolhido_por}</small>` : ""}
         </div>
       </div>
       <button class="botaoEscolher"
@@ -135,14 +179,13 @@ async function escolher(id) {
   const nome = prompt("Digite seu nome")
   if (!nome || nome.trim() === "") return
 
-  // UPDATE só funciona se escolhido = false (proteção contra corrida)
   const res = await fetch(
     `${API}?id=eq.${id}&escolhido=eq.false`,
     {
       method: "PATCH",
       headers: {
         ...headers,
-        "Prefer": "return=representation"   // retorna a linha atualizada
+        "Prefer": "return=representation"
       },
       body: JSON.stringify({
         escolhido: true,

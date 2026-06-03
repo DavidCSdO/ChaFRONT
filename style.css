@@ -24,10 +24,33 @@
 /* ─── BODY ──────────────────────────────────────────────── */
 body {
   font-family: 'Jost', sans-serif;
-  background: var(--creme);
+  background-color: var(--creme);
+  background-image: url('https://images.unsplash.com/photo-1522383225653-ed111181a951?w=1600&q=80&auto=format&fit=crop');
+  background-size: cover;
+  background-position: center top;
+  background-attachment: fixed;
   color: var(--texto);
   text-align: center;
   min-height: 100vh;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(253,246,240,0.55) 0%,
+    rgba(253,246,240,0.72) 50%,
+    rgba(253,246,240,0.88) 100%
+  );
+  z-index: 0;
+  pointer-events: none;
+}
+
+header, section, .dropdownLista {
+  position: relative;
+  z-index: 1;
 }
 
 /* ─── HEADER ────────────────────────────────────────────── */
@@ -223,6 +246,67 @@ nav a {
   box-shadow: 0 8px 20px rgba(37,211,102,0.25);
 }
 
+/* ─── PALETA DE CORES ───────────────────────────────────── */
+.paletaCores {
+  max-width: 580px;
+  width: 92%;
+  margin: 0 auto 28px;
+  background: rgba(255,255,255,0.82);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  border: 1px solid rgba(212,118,138,0.12);
+  padding: 24px 28px;
+  box-shadow: 0 4px 20px var(--sombra);
+  animation: fadeUp 0.4s ease both;
+}
+
+.paletaCores h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--texto-leve);
+  margin-bottom: 18px;
+}
+
+.paletaItens {
+  display: flex;
+  justify-content: center;
+  gap: 28px;
+  flex-wrap: wrap;
+}
+
+.paletaItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.paletaCirculo {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.9);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.14);
+  transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1);
+}
+
+.paletaCirculo:hover {
+  transform: scale(1.15);
+}
+
+.paletaLabel {
+  font-family: 'Jost', sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--texto-leve);
+}
+
 /* ─── DROPDOWN / LISTA ──────────────────────────────────── */
 .dropdownLista {
   display: none;
@@ -275,8 +359,9 @@ nav a {
 /* ─── CARD PRESENTE ─────────────────────────────────────── */
 .cardPresente {
   background: rgba(255, 255, 255, 0.92);
--webkit-backdrop-filter: blur(8px);  padding: 18px 20px;
-backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  padding: 18px 20px;
   border-radius: 20px;
   display: flex;
   align-items: center;
@@ -333,12 +418,12 @@ backdrop-filter: blur(8px);
 }
 
 .nomePresente small {
-  font-family: 'Jost', sans-serif;
-  font-size: 11px;
+  font-family: 'Great Vibes', cursive;
+  font-size: 15px;
   font-weight: 400;
-  letter-spacing: 0.06em;
-  color: var(--lavanda);
-  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--rosa);
+  text-transform: none;
 }
 
 /* ─── CORES SUGERIDAS ───────────────────────────────────── */
