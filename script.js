@@ -194,15 +194,19 @@ async function escolher(id) {
     }
   )
 
-const data = await res.json()
+  console.log("Status:", res.status)
+  console.log("Headers:", [...res.headers.entries()])
+  const data = await res.json()
+  console.log("Data:", data)
 
-if (res.status === 404 || (Array.isArray(data) && data.length === 0)) {
-  alert("Este presente já foi escolhido por outra pessoa 😕")
-} else if (!res.ok) {
-  alert("Erro ao reservar presente. Tente novamente.")
-} else {
-  alert("🎉 Presente reservado com sucesso!")
-}
+  if (Array.isArray(data) && data.length === 0) {
+    alert("Este presente já foi escolhido por outra pessoa 😕")
+  } else if (!res.ok) {
+    alert("Erro ao reservar presente. Tente novamente.")
+  } else {
+    alert("🎉 Presente reservado com sucesso!")
+  }
+
   carregarPresentes()
 }
 
