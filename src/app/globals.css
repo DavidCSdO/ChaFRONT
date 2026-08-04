@@ -1,0 +1,39 @@
+@import "tailwindcss";
+@plugin "tailwindcss-animate";
+
+@theme {
+  --font-serif: var(--font-cormorant);
+  --font-sans: var(--font-inter);
+  
+  --color-primary: #FDF6F5;
+  --color-secondary: #F4EAE8;
+  --color-champagne: #D9A0A0;
+  --color-gold: #B87373;
+  --color-dark: #2D2424;
+  --color-forest: #7A5C5C;
+
+  --color-background: var(--color-primary);
+  --color-foreground: var(--color-dark);
+}
+
+@layer base {
+  :root {
+    --background: #FDF6F5;
+    --foreground: #2D2424;
+    --radius: 0.5rem;
+  }
+}
+
+body {
+  background-color: var(--color-primary);
+  color: var(--color-dark);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: var(--color-champagne);
+  color: var(--color-dark);
+}

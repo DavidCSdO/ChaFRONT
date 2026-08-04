@@ -1,0 +1,554 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Great+Vibes&family=Jost:wght@300;400;500&display=swap');
+
+/* ─── VARIÁVEIS ─────────────────────────────────────────── */
+:root {
+  --rosa:       #D4768A;
+  --rosa-claro: #F2C4CE;
+  --lavanda:    #C9B8D8;
+  --lavanda-claro: #EDE7F6;
+  --creme:      #FDF6F0;
+  --texto:      #4A3040;
+  --texto-leve: #8A6A7A;
+  --branco:     #FFFFFF;
+  --sombra:     rgba(180, 100, 120, 0.12);
+  --sombra-hover: rgba(180, 100, 120, 0.22);
+}
+
+/* ─── RESET ─────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ─── BODY ──────────────────────────────────────────────── */
+body {
+  font-family: 'Jost', sans-serif;
+  background-color: var(--creme);
+  background-image: url('https://images.unsplash.com/photo-1522383225653-ed111181a951?w=1600&q=80&auto=format&fit=crop');
+  background-size: cover;
+  background-position: center top;
+  background-attachment: fixed;
+  color: var(--texto);
+  text-align: center;
+  min-height: 100vh;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(253,246,240,0.55) 0%,
+    rgba(253,246,240,0.72) 50%,
+    rgba(253,246,240,0.88) 100%
+  );
+  z-index: 0;
+  pointer-events: none;
+}
+
+header, section, .dropdownLista {
+  position: relative;
+  z-index: 1;
+}
+
+/* ─── HEADER ────────────────────────────────────────────── */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: rgba(253, 246, 240, 0.85);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(212, 118, 138, 0.15);
+  padding: 14px 24px;
+}
+
+nav a {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  color: var(--rosa);
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+/* ─── HERO ──────────────────────────────────────────────── */
+.hero {
+  padding-top: 80px;
+  padding-bottom: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+/* ─── LOGO ──────────────────────────────────────────────── */
+.logo {
+  width: 80%;
+  max-width: 520px;
+  margin-top: -6%;
+  margin-bottom: -6%;
+  filter: drop-shadow(0 4px 24px rgba(180,100,120,0.10));
+  animation: fadeUp 1s ease both;
+}
+
+/* ─── TEXTO ─────────────────────────────────────────────── */
+.texto {
+  max-width: 680px;
+  width: 90%;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 1.9;
+  color: var(--texto-leve);
+  margin: 32px auto;
+  animation: fadeUp 1s ease 0.15s both;
+}
+
+/* ─── DIVISOR FLORAL ────────────────────────────────────── */
+.divisor {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--rosa-claro);
+  font-size: 18px;
+  margin: 8px 0;
+  letter-spacing: 8px;
+}
+
+/* ─── BOTÃO PRINCIPAL ───────────────────────────────────── */
+.botao {
+  margin-top: 28px;
+  padding: 14px 36px;
+  background: linear-gradient(135deg, var(--rosa) 0%, #C0607A 100%);
+  border: none;
+  border-radius: 50px;
+  font-family: 'Jost', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 6px 24px var(--sombra);
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  animation: fadeUp 1s ease 0.3s both;
+}
+
+.botao:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 12px 32px var(--sombra-hover);
+}
+
+.botao:active {
+  transform: scale(0.98);
+}
+
+#seta {
+  display: inline-block;
+  font-size: 10px;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+#seta.girar {
+  transform: rotate(180deg);
+}
+
+/* ─── CONTADOR ──────────────────────────────────────────── */
+#contadorPresentes {
+  margin-top: 24px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 17px;
+  font-weight: 400;
+  color: var(--texto-leve);
+  letter-spacing: 0.04em;
+}
+
+/* ─── BARRA DE PROGRESSO ────────────────────────────────── */
+.containerProgresso {
+  width: 90%;
+  max-width: 480px;
+  margin: 16px auto 8px;
+  text-align: center;
+}
+
+#textoProgresso {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 15px;
+  color: var(--texto-leve);
+  margin-bottom: 10px;
+  letter-spacing: 0.03em;
+}
+
+.barraProgresso {
+  width: 100%;
+  height: 6px;
+  background: rgba(212, 118, 138, 0.12);
+  border-radius: 20px;
+  overflow: visible;
+  position: relative;
+}
+
+#barraInterna {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--lavanda) 0%, var(--rosa) 100%);
+  border-radius: 20px;
+  transition: width 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+}
+
+#barraInterna::after {
+  content: '';
+  position: absolute;
+  right: -1px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 12px;
+  height: 12px;
+  background: var(--rosa);
+  border-radius: 50%;
+  border: 2px solid white;
+  box-shadow: 0 0 0 3px rgba(212,118,138,0.2);
+}
+
+/* ─── BOTÃO WHATSAPP ────────────────────────────────────── */
+.botaoCompartilhar {
+  margin-top: 20px;
+  padding: 13px 28px;
+  background: transparent;
+  border: 1.5px solid #25D366;
+  border-radius: 50px;
+  font-family: 'Jost', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #1a9e4a;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  animation: fadeUp 1s ease 0.45s both;
+}
+
+.botaoCompartilhar:hover {
+  background: #25D366;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(37,211,102,0.25);
+}
+
+/* ─── PALETA DE CORES ───────────────────────────────────── */
+.paletaCores {
+  max-width: 580px;
+  width: 92%;
+  margin: 0 auto 28px;
+  background: rgba(255,255,255,0.82);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  border: 1px solid rgba(212,118,138,0.12);
+  padding: 24px 28px;
+  box-shadow: 0 4px 20px var(--sombra);
+  animation: fadeUp 0.4s ease both;
+}
+
+.paletaCores h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--texto-leve);
+  margin-bottom: 18px;
+}
+
+.paletaItens {
+  display: flex;
+  justify-content: center;
+  gap: 28px;
+  flex-wrap: wrap;
+}
+
+.paletaItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.paletaCirculo {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.9);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.14);
+  transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1);
+}
+
+.paletaCirculo:hover {
+  transform: scale(1.15);
+}
+
+.paletaLabel {
+  font-family: 'Jost', sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--texto-leve);
+}
+
+/* ─── DROPDOWN / LISTA ──────────────────────────────────── */
+.dropdownLista {
+  display: none;
+  max-width: 580px;
+  width: 92%;
+  margin: 0 auto 60px;
+  animation: fadeUp 0.4s ease both;
+}
+
+.dropdownLista.ativo {
+  display: block;
+}
+
+/* ─── CAMPO BUSCA ───────────────────────────────────────── */
+.campoBusca {
+  width: 100%;
+  margin: 24px 0 20px;
+  padding: 14px 20px;
+  border-radius: 50px;
+  border: 1.5px solid rgba(212, 118, 138, 0.25);
+  background: rgba(255,255,255,0.9);
+  font-family: 'Jost', sans-serif;
+  font-size: 14px;
+  color: var(--texto);
+  letter-spacing: 0.04em;
+  display: block;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 16px var(--sombra);
+}
+
+.campoBusca:focus {
+  outline: none;
+  border-color: var(--rosa);
+  box-shadow: 0 4px 20px var(--sombra-hover);
+}
+
+.campoBusca::placeholder {
+  color: var(--rosa-claro);
+}
+
+/* ─── LISTA DE PRESENTES ────────────────────────────────── */
+#presentes {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ─── CARD PRESENTE ─────────────────────────────────────── */
+.cardPresente {
+  background: rgba(255, 255, 255, 0.92);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  padding: 18px 20px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border: 1px solid rgba(212, 118, 138, 0.10);
+  box-shadow: 0 4px 16px var(--sombra);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  text-align: left;
+  animation: fadeUp 0.35s ease both;
+}
+
+.cardPresente:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 28px var(--sombra-hover);
+}
+
+/* Card escolhido */
+.presenteEscolhido {
+  background: rgba(237, 231, 246, 0.6);
+  border-color: rgba(201, 184, 216, 0.3);
+  opacity: 0.75;
+}
+
+/* ─── INFO PRESENTE ─────────────────────────────────────── */
+.infoPresente {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex: 1;
+  min-width: 0;
+}
+
+.icone {
+  font-size: 22px;
+  flex-shrink: 0;
+  width: 42px;
+  height: 42px;
+  background: linear-gradient(135deg, var(--lavanda-claro), #F9EEF5);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nomePresente {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 17px;
+  font-weight: 400;
+  color: var(--texto);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.nomePresente small {
+  font-family: 'Great Vibes', cursive;
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  color: black;
+  text-transform: none;
+}
+
+/* ─── CORES SUGERIDAS ───────────────────────────────────── */
+.coresSugestao {
+  display: flex;
+  gap: 5px;
+  margin-top: 4px;
+}
+
+.corItem {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255,255,255,0.8);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+  transition: transform 0.15s ease;
+}
+
+.corItem:hover {
+  transform: scale(1.3);
+}
+
+/* ─── BOTÃO ESCOLHER ────────────────────────────────────── */
+.botaoEscolher {
+  flex-shrink: 0;
+  padding: 9px 20px;
+  border-radius: 50px;
+  border: 1.5px solid var(--rosa);
+  background: transparent;
+  font-family: 'Jost', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--rosa);
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  white-space: nowrap;
+}
+
+.botaoEscolher:hover:not(:disabled) {
+  background: var(--rosa);
+  color: white;
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px var(--sombra-hover);
+}
+
+.botaoEscolher:disabled {
+  border-color: var(--lavanda);
+  color: var(--lavanda);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* ─── ANIMAÇÕES ─────────────────────────────────────────── */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes escolhidoAnimacao {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.03); background: #f0eaf8; }
+  100% { transform: scale(1); }
+}
+
+.presenteEscolhido {
+  animation: escolhidoAnimacao 0.5s ease;
+}
+
+/* ─── RESPONSIVO ────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .hero {
+    padding-top: 70px;
+  }
+
+  .logo {
+    width: 95%;
+    margin-top: -3%;
+    margin-bottom: -3%;
+  }
+
+  .texto {
+    font-size: 18px;
+  }
+
+  nav a {
+    font-size: 15px;
+  }
+
+  .botao {
+    font-size: 12px;
+    padding: 13px 28px;
+  }
+
+  .cardPresente {
+    padding: 14px 16px;
+  }
+
+  .nomePresente {
+    font-size: 15px;
+  }
+
+  .botaoEscolher {
+    font-size: 11px;
+    padding: 8px 14px;
+  }
+
+  .icone {
+    width: 36px;
+    height: 36px;
+    font-size: 18px;
+  }
+}
+
+footer {
+  font-family: 'Great vibes', serif;
+  font-size: 10px;
+  margin-top: 10%;
+  color: black;
+
+}
