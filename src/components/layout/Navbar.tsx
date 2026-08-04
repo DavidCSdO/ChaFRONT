@@ -16,7 +16,7 @@ export default function Navbar() {
       { y: -100, opacity: 0 },
       { y: 0, opacity: 1, duration: 1.5, ease: "power4.out", delay: 2.5 }
     );
-    
+
     if (tooltipRef.current) {
       gsap.to(tooltipRef.current, {
         opacity: 0,
@@ -45,14 +45,14 @@ export default function Navbar() {
           <Image src="/JD.png" alt="JD Logo" width={80} height={40} className="w-full h-auto object-contain" />
         </div>
 
-        <a 
+        <a
           href="#lista-de-presentes"
           className="relative flex items-center justify-center border border-primary/30 w-10 h-10 md:w-auto md:h-auto md:px-6 md:py-2 rounded-full font-sans text-xs tracking-widest uppercase hover:bg-primary hover:text-dark transition-colors duration-500"
         >
           <Gift size={16} className="md:hidden" />
           <span className="hidden md:inline-block">Lista de Presentes</span>
-          
-          <span 
+
+          <span
             ref={tooltipRef}
             className="absolute top-[calc(100%+8px)] right-0 md:hidden whitespace-nowrap bg-primary text-dark px-3 py-1.5 rounded font-sans text-[9px] uppercase tracking-widest shadow-lg pointer-events-none before:content-[''] before:absolute before:-top-1 before:right-3 before:w-2 before:h-2 before:bg-primary before:rotate-45"
           >
@@ -93,8 +93,8 @@ export default function Navbar() {
 
         <div className="px-10 py-12 border-t border-dark/5">
           <p className="font-sans text-[10px] font-bold tracking-widest uppercase text-dark/40 mb-4">[ CONTATO ]</p>
-          <p className="font-sans text-sm text-dark/70 mb-1">contato@juliaedavid.com</p>
-          <p className="font-sans text-sm text-dark/70">+55 (21) 99999-9999</p>
+          <p className="font-sans text-sm text-dark/70 mb-1">cardosodavid92@gmail.com</p>
+          <p className="font-sans text-sm text-dark/70">+55 (24) 9 99292-8110</p>
         </div>
       </div>
     </>
