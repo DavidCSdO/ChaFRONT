@@ -6,6 +6,8 @@ import { Flower } from "lucide-react";
 
 export default function Loader() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const leftCurtainRef = useRef<HTMLDivElement>(null);
+  const rightCurtainRef = useRef<HTMLDivElement>(null);
   const monogramRef = useRef<HTMLDivElement>(null);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
 
@@ -27,21 +29,27 @@ export default function Loader() {
       "-=0.5"
     );
 
-    // Fade out inner content and shrink circle
+    // Fade out inner content and shrink
     tl.to([monogramRef.current, subtitleRef.current], {
       opacity: 0,
-      scale: 0,
+      scale: 0.9,
       duration: 0.8,
       ease: "power2.inOut",
       delay: 0.5
     });
 
-    // Animate the entire background to close as a circle
-    tl.to(containerRef.current, {
-      clipPath: "circle(0% at 50% 50%)",
+    // Open Curtains
+    tl.to(leftCurtainRef.current, {
+      xPercent: -100,
       duration: 1.2,
       ease: "power4.inOut"
-    }, "-=0.2");
+    }, "open");
+
+    tl.to(rightCurtainRef.current, {
+      xPercent: 100,
+      duration: 1.2,
+      ease: "power4.inOut"
+    }, "open");
 
     // Hide container
     tl.set(containerRef.current, { display: "none" });
@@ -50,9 +58,20 @@ export default function Loader() {
   return (
     <div
       ref={containerRef}
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-primary pointer-events-auto"
-      style={{ clipPath: "circle(150% at 50% 50%)" }}
+      className="fixed inset-0 z-[100] flex pointer-events-none"
     >
+      {/* Left Curtain */}
+      <div 
+        ref={leftCurtainRef} 
+        className="w-1/2 h-full bg-primary flex items-center justify-end overflow-hidden pointer-events-auto"
+      ></div>
+
+      {/* Right Curtain */}
+      <div 
+        ref={rightCurtainRef} 
+        className="w-1/2 h-full bg-primary flex items-center justify-start overflow-hidden pointer-events-auto"
+      ></div>
+
       <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
         
         {/* Circle Monogram */}
