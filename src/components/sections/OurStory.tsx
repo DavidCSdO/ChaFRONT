@@ -26,20 +26,46 @@ export default function OurStory() {
     if (!sectionRef.current || !scrollContainerRef.current) return;
 
     const ctx = gsap.context(() => {
-      const scrollContainer = scrollContainerRef.current!;
-      const getScrollAmount = () => -(scrollContainer.scrollWidth - window.innerWidth);
+      const mm = gsap.matchMedia();
 
-      gsap.to(scrollContainer, {
-        x: getScrollAmount,
-        ease: "none",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top top",
-          end: () => `+=${scrollContainer.scrollWidth - window.innerWidth}`,
-          pin: true,
-          scrub: 0.1,
-          invalidateOnRefresh: true,
-        }
+      // Desktop: Horizontal Scroll
+      mm.add("(min-width: 768px)", () => {
+        const scrollContainer = scrollContainerRef.current!;
+        const getScrollAmount = () => -(scrollContainer.scrollWidth - window.innerWidth);
+
+        gsap.to(scrollContainer, {
+          x: getScrollAmount,
+          ease: "none",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top top",
+            end: () => `+=${scrollContainer.scrollWidth - window.innerWidth}`,
+            pin: true,
+            scrub: 0.1,
+            invalidateOnRefresh: true,
+          }
+        });
+      });
+
+      // Mobile: Vertical Scroll with Fade Up
+      mm.add("(max-width: 767px)", () => {
+        const cards = gsap.utils.toArray(".story-card");
+        
+        cards.forEach((card: unknown) => {
+          gsap.fromTo(card as HTMLElement,
+            { opacity: 0, y: 80 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 1,
+              ease: "power3.out",
+              scrollTrigger: {
+                trigger: card as HTMLElement,
+                start: "top 85%",
+              }
+            }
+          );
+        });
       });
     }, sectionRef);
 
@@ -47,22 +73,22 @@ export default function OurStory() {
   }, []);
 
   return (
-    <section ref={sectionRef} id="historia" className="h-screen w-full bg-secondary overflow-hidden flex items-center relative">
+    <section ref={sectionRef} id="historia" className="min-h-screen md:h-screen w-full bg-secondary overflow-hidden flex flex-col md:flex-row items-center relative py-20 md:py-0">
 
       {/* Background Decor */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/40 rounded-full blur-3xl pointer-events-none"></div>
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] md:w-[800px] md:h-[800px] bg-primary/40 rounded-full blur-3xl pointer-events-none"></div>
 
-      <div className="pl-[10vw] md:pl-[20vw] pr-[20vw] flex items-center gap-[10vw] md:gap-[20vw] h-full" ref={scrollContainerRef}>
+      <div className="px-[8vw] md:px-0 md:pl-[20vw] md:pr-[20vw] flex flex-col md:flex-row items-center md:items-center gap-16 md:gap-[20vw] h-auto md:h-full w-full md:w-auto" ref={scrollContainerRef}>
 
         {/* Intro */}
-        <div className="min-w-[80vw] md:min-w-[40vw] flex flex-col items-start shrink-0 z-10">
-          <p className="font-sans text-sm tracking-[0.3em] uppercase text-forest mb-6">A Essência</p>
+        <div className="w-full md:min-w-[40vw] flex flex-col items-center md:items-start text-center md:text-left shrink-0 z-10">
+          <p className="font-sans text-sm tracking-[0.3em] uppercase text-forest mb-4 md:mb-6">A Essência</p>
           <h2 className="font-serif text-5xl md:text-7xl text-dark leading-tight">
-            Nossa essência <br />
+            Nossa essência <br className="hidden md:block" />
             em <span className="italic text-gold">palavras</span>
           </h2>
 
-          <div className="mt-12 flex items-center gap-3 text-dark/40 animate-pulse">
+          <div className="mt-8 md:mt-12 flex items-center gap-3 text-dark/40 animate-pulse">
             <Mouse size={18} />
             <span className="font-sans text-[10px] md:text-[11px] tracking-widest uppercase">Role para baixo para navegar</span>
           </div>
@@ -70,17 +96,17 @@ export default function OurStory() {
 
         {/* Timeline Cards */}
         {quotesData.map((item, i) => (
-          <div key={i} className="w-[75vw] max-w-[300px] md:max-w-none md:w-[450px] shrink-0 relative group">
+          <div key={i} className="story-card w-full max-w-[380px] md:max-w-none md:w-[450px] shrink-0 relative group mx-auto md:mx-0">
             {/* Glassmorphism Card */}
-            <div className="relative bg-primary/20 backdrop-blur-xl border border-primary/50 rounded-2xl overflow-hidden shadow-2xl shadow-dark/5 transition-transform duration-700 group-hover:-translate-y-4">
+            <div className="relative bg-primary/40 md:bg-primary/20 backdrop-blur-xl border border-primary/50 rounded-2xl overflow-hidden shadow-2xl shadow-dark/5 transition-transform duration-700 md:group-hover:-translate-y-4">
 
               <div className="w-full aspect-[4/3] relative overflow-hidden">
                 <Image
                   src={item.image}
                   alt={item.title}
                   fill
-                  sizes="(max-width: 768px) 300px, 450px"
-                  className="object-cover group-hover:scale-105 transition-transform duration-1000"
+                  sizes="(max-width: 768px) 100vw, 450px"
+                  className="object-cover md:group-hover:scale-105 transition-transform duration-1000"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-dark/40 to-transparent"></div>
               </div>
