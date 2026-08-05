@@ -6,9 +6,9 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const scheduleData = [
   { time: "15:30", title: "A Cerimônia", desc: "O momento mais importante, onde diremos 'Sim'." },
-  { time: "", title: "Coquetel", desc: "Brindes e música boa enquanto tiramos as fotos oficiais." },
+  { time: "", title: "Coquetel", desc: "Aperitivos e boa conversa enquanto tiramos as fotos oficiais." },
   { time: "", title: "O Jantar", desc: "Um menu especial preparado para celebrarmos juntos." },
-  { time: "", title: "A Festa", desc: "A pista de dança estará liberada. Prepare-se para a noite toda!" }
+  { time: "", title: "Celebração", desc: "Momento do bolo, docinhos e muitas fotos para eternizarmos esse dia!" }
 ];
 
 export default function Schedule() {
@@ -21,7 +21,7 @@ export default function Schedule() {
     }
 
     const items = gsap.utils.toArray<HTMLElement>(".schedule-item");
-    
+
     // Animate the vertical line height on scroll
     if (lineRef.current && containerRef.current) {
       gsap.fromTo(lineRef.current,
@@ -38,14 +38,14 @@ export default function Schedule() {
         }
       );
     }
-    
+
     items.forEach((item) => {
-      gsap.fromTo(item, 
+      gsap.fromTo(item,
         { opacity: 0, y: 50 },
-        { 
-          opacity: 1, 
-          y: 0, 
-          duration: 1, 
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1,
           ease: "power3.out",
           scrollTrigger: {
             trigger: item,
@@ -60,7 +60,7 @@ export default function Schedule() {
   return (
     <section id="cronograma" className="relative w-full py-32 px-8 bg-secondary overflow-hidden" ref={containerRef}>
       <div className="max-w-4xl mx-auto flex flex-col items-center">
-        
+
         <div className="text-center mb-24">
           <p className="font-sans text-sm tracking-[0.3em] uppercase text-forest mb-6">Programação</p>
           <h2 className="font-serif text-5xl md:text-7xl text-dark leading-tight">
@@ -71,16 +71,16 @@ export default function Schedule() {
         <div className="w-full relative">
           {/* Background Vertical Line */}
           <div className="absolute left-[23px] md:left-1/2 top-4 bottom-4 w-[2px] bg-dark/10 md:-translate-x-1/2"></div>
-          
+
           {/* Animated Vertical Line */}
-          <div 
+          <div
             ref={lineRef}
             className="absolute left-[23px] md:left-1/2 top-4 bottom-4 w-[2px] bg-gold md:-translate-x-1/2 origin-top"
           ></div>
 
           {scheduleData.map((event, i) => (
             <div key={i} className="schedule-item relative flex flex-col md:flex-row items-start md:items-center justify-between w-full mb-20 last:mb-0">
-              
+
               {/* Dot */}
               <div className="absolute left-4 md:left-1/2 w-4 h-4 rounded-full bg-primary border-4 border-gold top-2 md:top-auto md:-translate-x-1/2 md:translate-y-0 z-10 shadow-[0_0_15px_rgba(200,166,106,0.6)]"></div>
 

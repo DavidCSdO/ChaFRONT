@@ -14,7 +14,7 @@ const timelineData = [
   { year: "2018", title: "O Primeiro Olhar", text: "Nos conhecemos em um café no centro da cidade. Foi apenas uma troca de olhares, mas o suficiente para mudar tudo.", image: "/carrocel/1.jpeg" },
   { year: "2020", title: "O Reencontro", text: "O destino nos colocou no mesmo lugar novamente, dessa vez para não nos separarmos mais.", image: "/carrocel/2.jpeg" },
   { year: "2023", title: "O Pedido", text: "Em uma viagem inesquecível, sob as luzes de Paris, decidimos dar o próximo passo em nossa jornada.", image: "/carrocel/3.jpeg" },
-  { year: "2027", title: "O Grande Dia", text: "Estamos prontos para celebrar o nosso amor com as pessoas mais importantes das nossas vidas.", image: "/carrocel/4.jpeg" }
+  { year: "2026", title: "O Grande Dia", text: "Estamos prontos para celebrar o nosso amor com as pessoas mais importantes das nossas vidas.", image: "/carrocel/4.jpeg" }
 ];
 
 export default function OurStory() {

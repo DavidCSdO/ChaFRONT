@@ -39,13 +39,13 @@ export default function Hero() {
 
       {/* Foreground Content */}
       <div className="relative z-10 flex flex-col items-center justify-center w-full h-full text-center pointer-events-none">
-        
+
         <div ref={textRef} className="flex flex-col items-center opacity-0 w-full max-w-[60vw] md:max-w-[40vw] lg:max-w-[30vw] relative">
-          <Image 
-            src="/Group 1.png" 
-            alt="Julia & David" 
-            width={800} 
-            height={400} 
+          <Image
+            src="/Group 1.png"
+            alt="Julia & David"
+            width={800}
+            height={400}
             className="w-full h-auto object-contain drop-shadow-xl"
             priority
           />
@@ -53,7 +53,7 @@ export default function Hero() {
 
         <div ref={dateRef} className="mt-8 opacity-0">
           <p className="font-sans text-sm md:text-base tracking-[0.3em] uppercase text-dark/70">
-            07 de Setembro de 2027
+            07 de Setembro de 2026
           </p>
         </div>
 
