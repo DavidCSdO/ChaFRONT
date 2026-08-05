@@ -4,6 +4,7 @@
 @theme {
   --font-serif: var(--font-cormorant);
   --font-sans: var(--font-inter);
+  --font-script: var(--font-great-vibes);
   
   --color-primary: #FDF6F5;
   --color-secondary: #F4EAE8;

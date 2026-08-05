@@ -11,11 +11,11 @@ if (typeof window !== "undefined") {
 import Image from "next/image";
 import { Mouse } from "lucide-react";
 
-const timelineData = [
-  { year: "2018", title: "O Primeiro Olhar", text: "Nos conhecemos em um café no centro da cidade. Foi apenas uma troca de olhares, mas o suficiente para mudar tudo.", image: "/carrocel/1.jpeg" },
-  { year: "2020", title: "O Reencontro", text: "O destino nos colocou no mesmo lugar novamente, dessa vez para não nos separarmos mais.", image: "/carrocel/2.jpeg" },
-  { year: "2023", title: "O Pedido", text: "Em uma viagem inesquecível, sob as luzes de Paris, decidimos dar o próximo passo em nossa jornada.", image: "/carrocel/3.jpeg" },
-  { year: "2026", title: "O Grande Dia", text: "Estamos prontos para celebrar o nosso amor com as pessoas mais importantes das nossas vidas.", image: "/carrocel/4.jpeg" }
+const quotesData = [
+  { number: "O amor", title: "Encontro de Almas", text: "O amor não é apenas olhar um para o outro, mas sim olhar juntos na mesma direção. É encontrar na outra pessoa o lar que o coração sempre buscou.", image: "/carrocel/1.jpeg" },
+  { number: "é", title: "Cumplicidade", text: "Mais do que dividir os dias, é multiplicar as alegrias e dividir os fardos. A verdadeira parceria transforma a rotina em poesia.", image: "/carrocel/2.jpeg" },
+  { number: "Cumplicidade", title: "O Cuidado", text: "Amar é escolher a mesma pessoa todos os dias. É a arte de cuidar, de entender o silêncio e de celebrar até as menores vitórias.", image: "/carrocel/3.jpeg" },
+  { number: "Para Sempre", title: "Para Sempre", text: "O 'para sempre' não é um destino, é a construção diária que fazemos lado a lado. Hoje celebramos apenas o começo do nosso infinito.", image: "/carrocel/4.jpeg" }
 ];
 
 export default function OurStory() {
@@ -48,20 +48,20 @@ export default function OurStory() {
 
   return (
     <section ref={sectionRef} id="historia" className="h-screen w-full bg-secondary overflow-hidden flex items-center relative">
-      
+
       {/* Background Decor */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/40 rounded-full blur-3xl pointer-events-none"></div>
 
       <div className="pl-[10vw] md:pl-[20vw] pr-[20vw] flex items-center gap-[10vw] md:gap-[20vw] h-full" ref={scrollContainerRef}>
-        
+
         {/* Intro */}
         <div className="min-w-[80vw] md:min-w-[40vw] flex flex-col items-start shrink-0 z-10">
-          <p className="font-sans text-sm tracking-[0.3em] uppercase text-forest mb-6">Nossa História</p>
+          <p className="font-sans text-sm tracking-[0.3em] uppercase text-forest mb-6">A Essência</p>
           <h2 className="font-serif text-5xl md:text-7xl text-dark leading-tight">
-            Cada detalhe <br/>
-            nos trouxe <span className="italic text-gold">aqui</span>
+            Nossa essência <br />
+            em <span className="italic text-gold">palavras</span>
           </h2>
-          
+
           <div className="mt-12 flex items-center gap-3 text-dark/40 animate-pulse">
             <Mouse size={18} />
             <span className="font-sans text-[10px] md:text-[11px] tracking-widest uppercase">Role para baixo para navegar</span>
@@ -69,16 +69,16 @@ export default function OurStory() {
         </div>
 
         {/* Timeline Cards */}
-        {timelineData.map((item, i) => (
-          <div key={i} className="w-[75vw] max-w-[300px] md:max-w-none md:min-w-[450px] shrink-0 relative group">
+        {quotesData.map((item, i) => (
+          <div key={i} className="w-[75vw] max-w-[300px] md:max-w-none md:w-[450px] shrink-0 relative group">
             {/* Glassmorphism Card */}
             <div className="relative bg-primary/20 backdrop-blur-xl border border-primary/50 rounded-2xl overflow-hidden shadow-2xl shadow-dark/5 transition-transform duration-700 group-hover:-translate-y-4">
-              
+
               <div className="w-full aspect-[4/3] relative overflow-hidden">
-                <Image 
-                  src={item.image} 
-                  alt={item.title} 
-                  fill 
+                <Image
+                  src={item.image}
+                  alt={item.title}
+                  fill
                   sizes="(max-width: 768px) 300px, 450px"
                   className="object-cover group-hover:scale-105 transition-transform duration-1000"
                 />
@@ -86,7 +86,7 @@ export default function OurStory() {
               </div>
 
               <div className="p-6 md:p-14 pt-6 md:pt-8">
-                <div className="font-serif text-3xl md:text-5xl text-champagne mb-4 md:mb-6 opacity-80">{item.year}</div>
+                <div className="font-script text-5xl md:text-6xl text-champagne mb-4 md:mb-6 opacity-80">{item.number}</div>
                 <h3 className="font-sans text-lg md:text-xl font-medium tracking-wide text-dark mb-3 md:mb-4 uppercase">{item.title}</h3>
                 <p className="font-sans text-sm md:text-base text-dark/70 leading-relaxed font-light">
                   {item.text}
@@ -96,7 +96,7 @@ export default function OurStory() {
             </div>
           </div>
         ))}
-        
+
       </div>
     </section>
   );

@@ -7,11 +7,14 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 export default function SmoothScroll({ children }: { children: React.ReactNode }) {
   useEffect(() => {
-    // Force scroll to top on reload to prevent GSAP ScrollTrigger bugs
+    // 1. Tell browser not to restore scroll
     if ("scrollRestoration" in window.history) {
       window.history.scrollRestoration = "manual";
     }
-    window.scrollTo(0, 0);
+
+    // 2. Scroll up before the page unloads (F5)
+    const onBeforeUnload = () => window.scrollTo(0, 0);
+    window.addEventListener("beforeunload", onBeforeUnload);
 
     if (typeof window !== "undefined") {
       gsap.registerPlugin(ScrollTrigger);
@@ -37,7 +40,18 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
     gsap.ticker.add(updateLenis);
     gsap.ticker.lagSmoothing(0);
 
+    // 3. Bruteforce scroll to top on mount
+    window.scrollTo(0, 0);
+    lenis.scrollTo(0, { immediate: true });
+
+    // Extra fallback for browsers with slow scroll restoration
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+      lenis.scrollTo(0, { immediate: true });
+    }, 50);
+
     return () => {
+      window.removeEventListener("beforeunload", onBeforeUnload);
       gsap.ticker.remove(updateLenis);
       lenis.destroy();
     };
