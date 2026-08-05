@@ -17,7 +17,7 @@ import SmoothScroll from "@/components/layout/SmoothScroll";
 
 export const metadata: Metadata = {
   title: "Julia & David | Casamento",
-  description: "Celebração do casamento de Julia & David - 07 de Setembro de 2027",
+  description: "Celebração do casamento de Julia & David - 07 de Setembro de 2026",
 };
 
 export default function RootLayout({

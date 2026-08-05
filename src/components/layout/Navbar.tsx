@@ -88,6 +88,7 @@ export default function Navbar() {
           <a href="#o-grande-dia" onClick={() => setIsOpen(false)} className="font-sans text-3xl md:text-4xl text-dark hover:text-gold transition-colors duration-300">O Grande Dia</a>
           <a href="#cronograma" onClick={() => setIsOpen(false)} className="font-sans text-3xl md:text-4xl text-dark hover:text-gold transition-colors duration-300">Cronograma</a>
           <a href="#galeria" onClick={() => setIsOpen(false)} className="font-sans text-3xl md:text-4xl text-dark hover:text-gold transition-colors duration-300">Galeria</a>
+          <a href="#mensagens" onClick={() => setIsOpen(false)} className="font-sans text-3xl md:text-4xl text-dark hover:text-gold transition-colors duration-300">Mensagens</a>
           <a href="#lista-de-presentes" onClick={() => setIsOpen(false)} className="font-sans text-3xl md:text-4xl text-dark hover:text-gold transition-colors duration-300">Lista de Presentes</a>
         </div>
 

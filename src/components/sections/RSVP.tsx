@@ -77,6 +77,15 @@ export default function RSVP() {
                 />
               </div>
 
+              <div>
+                <label className="block font-sans text-xs tracking-widest uppercase text-dark/70 mb-2 pl-4">Música Sugerida</label>
+                <input 
+                  type="text" 
+                  className="w-full bg-primary/50 border border-dark/10 rounded-full px-6 py-4 font-sans text-sm text-dark outline-none focus:border-gold transition-colors"
+                  placeholder="Aquela que não pode faltar!"
+                />
+              </div>
+
               <button 
                 type="submit"
                 disabled={status === "submitting"}

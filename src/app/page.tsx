@@ -5,9 +5,11 @@ import OurStory from "@/components/sections/OurStory";
 import TheBigDay from "@/components/sections/TheBigDay";
 import Schedule from "@/components/sections/Schedule";
 import Gallery from "@/components/sections/Gallery";
+import Guestbook from "@/components/sections/Guestbook";
 import GiftList from "@/components/sections/GiftList";
 import RSVP from "@/components/sections/RSVP";
 import Footer from "@/components/layout/Footer";
+import BackToTop from "@/components/layout/BackToTop";
 
 export default function Home() {
   return (
@@ -19,9 +21,11 @@ export default function Home() {
       <TheBigDay />
       <Schedule />
       <Gallery />
+      <Guestbook />
       <GiftList />
       <RSVP />
       <Footer />
+      <BackToTop />
     </main>
   );
 }

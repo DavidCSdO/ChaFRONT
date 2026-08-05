@@ -1,6 +1,35 @@
-import { MapPin } from "lucide-react";
+"use client";
+
+import { MapPin, Calendar, Clock } from "lucide-react";
+import { useState, useEffect } from "react";
 
 export default function TheBigDay() {
+  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    const targetDate = new Date("2026-09-07T15:30:00-03:00").getTime();
+
+    const updateCountdown = () => {
+      const now = new Date().getTime();
+      const difference = targetDate - now;
+
+      if (difference > 0) {
+        setTimeLeft({
+          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+          hours: Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+          minutes: Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)),
+          seconds: Math.floor((difference % (1000 * 60)) / 1000),
+        });
+      }
+    };
+
+    updateCountdown();
+    const interval = setInterval(updateCountdown, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <section id="o-grande-dia" className="relative w-full min-h-screen bg-primary py-32 px-8 md:px-24 flex flex-col md:flex-row items-center gap-16 md:gap-32">
       
@@ -19,7 +48,17 @@ export default function TheBigDay() {
             <h3 className="font-sans text-xs tracking-[0.3em] uppercase text-dark/50 mb-6 relative z-10">Quando</h3>
             <p className="font-serif text-7xl md:text-8xl text-dark mb-4 relative z-10">07</p>
             <p className="font-serif text-4xl text-dark/90 mb-4 relative z-10">Setembro</p>
-            <p className="font-sans text-sm tracking-[0.2em] text-dark/70 uppercase relative z-10">Sexta-feira, às 15:30h</p>
+            <p className="font-sans text-sm tracking-[0.2em] text-dark/70 uppercase relative z-10 mb-8">Segunda-feira, às 15:30h</p>
+            
+            <a 
+              href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Casamento+Julia+%26+David&dates=20260907T183000Z/20260908T030000Z&details=Celebra%C3%A7%C3%A3o+do+nosso+casamento!&location=Dom+Lengruber,+Vale+dos+Esquilos,+Petr%C3%B3polis+-+RJ" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="relative z-10 flex items-center gap-2 border border-dark/20 text-dark px-6 py-3 rounded-full font-sans text-[10px] tracking-widest uppercase hover:bg-dark hover:text-primary transition-all duration-500"
+            >
+              <Calendar size={14} />
+              Salvar na Agenda
+            </a>
           </div>
 
           {/* Location Card */}
@@ -46,6 +85,23 @@ export default function TheBigDay() {
           </div>
 
         </div>
+
+        {/* Countdown Timer */}
+        {mounted && (
+          <div className="w-full mt-16 flex flex-wrap justify-center gap-4 md:gap-8 relative z-10">
+            {[
+              { label: "Dias", value: timeLeft.days },
+              { label: "Horas", value: timeLeft.hours },
+              { label: "Minutos", value: timeLeft.minutes },
+              { label: "Segundos", value: timeLeft.seconds }
+            ].map((item, i) => (
+              <div key={i} className="flex flex-col items-center bg-primary/80 backdrop-blur-md border border-dark/10 rounded-2xl w-20 md:w-28 py-4 md:py-6 shadow-xl shadow-dark/5">
+                <span className="font-serif text-3xl md:text-5xl text-gold mb-1">{item.value.toString().padStart(2, '0')}</span>
+                <span className="font-sans text-[9px] md:text-xs tracking-[0.2em] uppercase text-dark/50">{item.label}</span>
+              </div>
+            ))}
+          </div>
+        )}
 
         <div className="w-full flex justify-center mt-20 relative">
           <div className="w-full max-w-5xl h-[400px] md:h-[500px] rounded-3xl overflow-hidden border-4 border-white shadow-2xl relative group">
