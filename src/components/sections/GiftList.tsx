@@ -152,52 +152,65 @@ export default function GiftList() {
                   viewport={{ once: true, margin: "-20px" }}
                   transition={{ duration: 0.5, ease: "easeOut" }}
                   key={gift.id} 
-                  className={`group relative p-5 md:p-8 rounded-3xl border transition-all duration-500 ease-out flex flex-col justify-between min-h-[200px] md:min-h-[260px] ${
-                    gift.escolhido 
-                    ? "bg-transparent border-dark/5 opacity-50 grayscale" 
-                    : "bg-primary border-dark/5 hover:border-gold/30 hover:-translate-y-2 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] cursor-pointer"
-                  }`}
-                  onClick={() => !gift.escolhido && setSelectedGift(gift)}
+                  className="h-full"
                 >
-                  <div>
-                    <div className="flex justify-between items-start mb-4 md:mb-8">
-                      <div className={`w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center transition-colors duration-500 ${gift.escolhido ? "bg-dark/5 text-dark/30" : "bg-secondary text-gold group-hover:bg-gold group-hover:text-primary"}`}>
-                        {gift.escolhido ? <Check size={18} className="md:w-5 md:h-5" /> : <Gift size={18} className="md:w-5 md:h-5" />}
+                  <div 
+                    className={`group relative p-6 md:p-8 rounded-[2rem] border transition-all duration-500 ease-out flex flex-col justify-between h-full min-h-[240px] md:min-h-[300px] overflow-hidden ${
+                      gift.escolhido 
+                      ? "bg-transparent border-dark/5 opacity-60 grayscale" 
+                      : "bg-white border-gold/10 hover:border-gold/40 hover:-translate-y-2 hover:shadow-[0_20px_40px_-15px_rgba(184,115,115,0.15)] cursor-pointer shadow-sm"
+                    }`}
+                    onClick={() => !gift.escolhido && setSelectedGift(gift)}
+                  >
+                    {/* Subtle background glow for unselected */}
+                    {!gift.escolhido && (
+                      <div className="absolute -right-10 -top-10 w-40 h-40 bg-champagne/10 rounded-full blur-3xl group-hover:bg-champagne/20 transition-all duration-500 pointer-events-none"></div>
+                    )}
+
+                    <div className="relative z-10">
+                      <div className="flex justify-between items-start mb-6 md:mb-8">
+                        <div className={`w-12 h-12 md:w-14 md:h-14 rounded-2xl flex items-center justify-center transition-all duration-500 ${gift.escolhido ? "bg-dark/5 text-dark/30" : "bg-secondary text-gold group-hover:bg-gold group-hover:text-primary group-hover:scale-110 shadow-sm"}`}>
+                          {gift.escolhido ? <Check size={20} className="md:w-6 md:h-6" /> : <Gift size={20} className="md:w-6 md:h-6" />}
+                        </div>
+                        
+                        {cores.length > 0 && (
+                          <div className="flex flex-col items-end gap-2 bg-primary/50 px-3 py-2 rounded-xl border border-dark/5">
+                            <span className="font-sans text-[9px] md:text-[10px] uppercase tracking-widest text-dark/50">Cores</span>
+                            <div className="flex gap-1.5">
+                              {cores.map((c, i) => (
+                                <span 
+                                  key={i} 
+                                  className="w-4 h-4 md:w-5 md:h-5 rounded-full shadow-sm ring-1 ring-black/5 border border-white/50"
+                                  style={{ backgroundColor: c }}
+                                  title={c}
+                                />
+                              ))}
+                            </div>
+                          </div>
+                        )}
                       </div>
                       
-                      {cores.length > 0 && (
-                        <div className="flex flex-col items-end gap-1.5">
-                          <span className="font-sans text-[8px] md:text-[9px] uppercase tracking-widest text-dark/40">Cores Sugeridas</span>
-                          <div className="flex gap-1.5">
-                            {cores.map((c, i) => (
-                              <span 
-                                key={i} 
-                                className="w-4 h-4 rounded-full shadow-sm ring-1 ring-black/5"
-                                style={{ backgroundColor: c }}
-                                title={c}
-                              />
-                            ))}
-                          </div>
-                        </div>
-                      )}
+                      <h3 className="font-serif text-2xl md:text-3xl text-dark leading-snug group-hover:text-gold transition-colors duration-500">{gift.nome}</h3>
                     </div>
                     
-                    <h3 className="font-serif text-xl md:text-3xl text-dark mb-2 md:mb-4 leading-tight">{gift.nome}</h3>
+                    {gift.escolhido ? (
+                      <div className="mt-6 pt-5 border-t border-dark/5 relative z-10">
+                        <p className="font-sans text-[10px] text-dark/50 uppercase tracking-[0.2em] flex items-center gap-2">
+                          <Check size={12} className="text-forest/50"/> Presenteado por
+                        </p>
+                        <span className="font-serif text-lg md:text-xl text-dark/80 mt-1 block">{gift.escolhido_por}</span>
+                      </div>
+                    ) : (
+                      <div className="mt-6 pt-5 border-t border-dark/5 relative z-10">
+                        <div className="w-full flex items-center justify-between text-dark/50 group-hover:text-gold transition-colors duration-500">
+                          <span className="font-sans text-[11px] md:text-xs uppercase tracking-widest font-medium">Presentear</span>
+                          <div className="w-8 h-8 rounded-full border border-dark/10 flex items-center justify-center group-hover:border-gold group-hover:bg-gold group-hover:text-white transition-all duration-500">
+                            <ArrowRight size={14} className="transform group-hover:translate-x-0.5 transition-transform duration-500" />
+                          </div>
+                        </div>
+                      </div>
+                    )}
                   </div>
-                  
-                  {gift.escolhido ? (
-                    <div className="mt-4 md:mt-8 pt-4 md:pt-6 border-t border-dark/5">
-                      <p className="font-sans text-[10px] text-dark/50 uppercase tracking-[0.2em]">
-                        Presenteado por <br/>
-                        <span className="font-serif text-sm md:text-base text-dark/80 normal-case mt-1 block">{gift.escolhido_por}</span>
-                      </p>
-                    </div>
-                  ) : (
-                    <div className="mt-4 md:mt-8 pt-4 md:pt-6 border-t border-dark/5 flex items-center justify-between text-dark/40 group-hover:text-gold transition-colors duration-500">
-                      <span className="font-sans text-[10px] md:text-xs uppercase tracking-widest">Presentear</span>
-                      <ArrowRight size={14} className="md:w-4 md:h-4 transform group-hover:translate-x-2 transition-transform duration-500" />
-                    </div>
-                  )}
                 </motion.div>
               );
             })}
