@@ -33,8 +33,14 @@ export default function Guestbook() {
     setLoading(false);
   };
 
+  const [isMobile, setIsMobile] = useState(false);
+
   useEffect(() => {
     fetchMensagens();
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
   const handleSubmit = async () => {
@@ -108,7 +114,7 @@ export default function Guestbook() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-20px" }}
-                transition={{ duration: 0.6, delay: (index % 10) * 0.1, ease: "easeOut" }}
+                transition={{ duration: 0.6, delay: isMobile ? 0.05 : (index % 10) * 0.1, ease: "easeOut" }}
                 key={msg.id} 
                 className="break-inside-avoid bg-secondary p-8 rounded-3xl border border-white shadow-sm hover:shadow-xl hover:shadow-dark/5 transition-all duration-500 relative group"
               >
