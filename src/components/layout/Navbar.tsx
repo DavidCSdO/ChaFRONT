@@ -41,8 +41,8 @@ export default function Navbar() {
           <span className="hidden md:inline-block">Menu</span>
         </button>
 
-        <div className="absolute left-1/2 -translate-x-1/2 w-16 md:w-20 invert opacity-90">
-          <Image src="/JD.png" alt="JD Logo" width={80} height={40} className="w-full h-auto object-contain" />
+        <div className="absolute left-1/2 -translate-x-1/2 w-16 md:w-20 aspect-[2/1] invert opacity-90">
+          <Image src="/JD.png" alt="JD Logo" fill className="object-contain" priority sizes="80px" />
         </div>
 
         <a
@@ -72,8 +72,8 @@ export default function Navbar() {
         className={`fixed top-0 left-0 h-full w-[85vw] md:w-[400px] bg-secondary z-50 transform transition-transform duration-700 ease-[cubic-bezier(0.77,0,0.175,1)] flex flex-col ${isOpen ? "translate-x-0" : "-translate-x-full"}`}
       >
         <div className="flex items-center justify-between px-10 py-8 border-b border-dark/5">
-          <div className="w-16 md:w-20 opacity-90">
-            <Image src="/JD.png" alt="JD Logo" width={80} height={40} className="w-full h-auto object-contain" />
+          <div className="w-16 md:w-20 aspect-[2/1] opacity-90 relative">
+            <Image src="/JD.png" alt="JD Logo" fill className="object-contain" priority sizes="80px" />
           </div>
           <button
             onClick={() => setIsOpen(false)}

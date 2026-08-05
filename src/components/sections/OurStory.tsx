@@ -9,6 +9,7 @@ if (typeof window !== "undefined") {
 }
 
 import Image from "next/image";
+import { Mouse } from "lucide-react";
 
 const timelineData = [
   { year: "2018", title: "O Primeiro Olhar", text: "Nos conhecemos em um café no centro da cidade. Foi apenas uma troca de olhares, mas o suficiente para mudar tudo.", image: "/carrocel/1.jpeg" },
@@ -24,28 +25,25 @@ export default function OurStory() {
   useEffect(() => {
     if (!sectionRef.current || !scrollContainerRef.current) return;
 
-    const scrollContainer = scrollContainerRef.current;
-    
-    // Calculates how far to move horizontally based on content width vs window width
-    const getScrollAmount = () => -(scrollContainer.scrollWidth - window.innerWidth);
+    const ctx = gsap.context(() => {
+      const scrollContainer = scrollContainerRef.current!;
+      const getScrollAmount = () => -(scrollContainer.scrollWidth - window.innerWidth);
 
-    const tween = gsap.to(scrollContainer, {
-      x: getScrollAmount,
-      ease: "none",
-      scrollTrigger: {
-        trigger: sectionRef.current,
-        start: "top top",
-        end: () => `+=${scrollContainer.scrollWidth}`, // Pinned duration depends on total width
-        pin: true,
-        scrub: 1, // Smooth scrubbing
-        invalidateOnRefresh: true, // Recalculate on resize
-      }
-    });
+      gsap.to(scrollContainer, {
+        x: getScrollAmount,
+        ease: "none",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top top",
+          end: () => `+=${scrollContainer.scrollWidth}`,
+          pin: true,
+          scrub: 1,
+          invalidateOnRefresh: true,
+        }
+      });
+    }, sectionRef);
 
-    return () => {
-      tween.kill();
-      ScrollTrigger.getAll().forEach(t => t.kill());
-    };
+    return () => ctx.revert();
   }, []);
 
   return (
@@ -63,11 +61,16 @@ export default function OurStory() {
             Cada detalhe <br/>
             nos trouxe <span className="italic text-gold">aqui</span>
           </h2>
+          
+          <div className="mt-12 flex items-center gap-3 text-dark/40 animate-pulse">
+            <Mouse size={18} />
+            <span className="font-sans text-[10px] md:text-[11px] tracking-widest uppercase">Role para baixo para navegar</span>
+          </div>
         </div>
 
         {/* Timeline Cards */}
         {timelineData.map((item, i) => (
-          <div key={i} className="min-w-[75vw] md:min-w-[450px] shrink-0 relative group">
+          <div key={i} className="w-[75vw] max-w-[300px] md:max-w-none md:min-w-[450px] shrink-0 relative group">
             {/* Glassmorphism Card */}
             <div className="relative bg-primary/20 backdrop-blur-xl border border-primary/50 rounded-2xl overflow-hidden shadow-2xl shadow-dark/5 transition-transform duration-700 group-hover:-translate-y-4">
               
@@ -76,6 +79,7 @@ export default function OurStory() {
                   src={item.image} 
                   alt={item.title} 
                   fill 
+                  sizes="(max-width: 768px) 300px, 450px"
                   className="object-cover group-hover:scale-105 transition-transform duration-1000"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-dark/40 to-transparent"></div>

@@ -20,41 +20,44 @@ export default function Schedule() {
       gsap.registerPlugin(ScrollTrigger);
     }
 
-    const items = gsap.utils.toArray<HTMLElement>(".schedule-item");
+    const ctx = gsap.context(() => {
+      const items = gsap.utils.toArray<HTMLElement>(".schedule-item");
 
-    // Animate the vertical line height on scroll
-    if (lineRef.current && containerRef.current) {
-      gsap.fromTo(lineRef.current,
-        { scaleY: 0 },
-        {
-          scaleY: 1,
-          ease: "none",
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: "top center",
-            end: "bottom center",
-            scrub: true,
+      // Animate the vertical line height on scroll
+      if (lineRef.current && containerRef.current) {
+        gsap.fromTo(lineRef.current,
+          { scaleY: 0 },
+          {
+            scaleY: 1,
+            ease: "none",
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: "top center",
+              end: "bottom center",
+              scrub: true,
+            }
           }
-        }
-      );
-    }
+        );
+      }
 
-    items.forEach((item) => {
-      gsap.fromTo(item,
-        { opacity: 0, y: 50 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 1,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: item,
-            start: "top 80%",
+      items.forEach((item) => {
+        gsap.fromTo(item,
+          { opacity: 0, y: 50 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 1,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: item,
+              start: "top 80%",
+            }
           }
-        }
-      );
-    });
+        );
+      });
+    }, containerRef);
 
+    return () => ctx.revert();
   }, []);
 
   return (

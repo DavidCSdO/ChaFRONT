@@ -2,12 +2,13 @@
 
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
+import { Flower } from "lucide-react";
 
 export default function Loader() {
   const containerRef = useRef<HTMLDivElement>(null);
   const leftCurtainRef = useRef<HTMLDivElement>(null);
   const rightCurtainRef = useRef<HTMLDivElement>(null);
-  const monogramRef = useRef<HTMLHeadingElement>(null);
+  const monogramRef = useRef<HTMLDivElement>(null);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
 
   useEffect(() => {
@@ -75,15 +76,26 @@ export default function Loader() {
 
       {/* Content */}
       <div className="absolute inset-0 flex flex-col items-center justify-center z-10 pointer-events-none">
-        <h1
+        
+        {/* Circle Monogram */}
+        <div 
           ref={monogramRef}
-          className="font-serif text-6xl md:text-8xl text-dark tracking-widest text-center opacity-0"
+          className="relative opacity-0 flex items-center justify-center w-56 h-56 md:w-72 md:h-72 rounded-full border border-dark/20 bg-primary/50 backdrop-blur-sm shadow-xl"
         >
-          J <span className="text-gold italic">&</span> D
-        </h1>
+          {/* Floral Ornaments */}
+          <Flower size={20} strokeWidth={1} className="absolute -top-3 left-1/2 -translate-x-1/2 text-gold opacity-80 rotate-45" />
+          <Flower size={20} strokeWidth={1} className="absolute -bottom-3 left-1/2 -translate-x-1/2 text-gold opacity-80 -rotate-45" />
+          <Flower size={20} strokeWidth={1} className="absolute top-1/2 -left-3 -translate-y-1/2 text-gold opacity-80 -rotate-45" />
+          <Flower size={20} strokeWidth={1} className="absolute top-1/2 -right-3 -translate-y-1/2 text-gold opacity-80 rotate-45" />
+          
+          <h1 className="font-serif text-5xl md:text-7xl text-dark tracking-widest text-center mt-2">
+            J <span className="text-gold italic">&</span> D
+          </h1>
+        </div>
+
         <p 
           ref={subtitleRef}
-          className="font-sans text-xs md:text-sm tracking-[0.3em] uppercase text-dark/50 mt-6 opacity-0"
+          className="font-sans text-xs md:text-sm tracking-[0.3em] uppercase text-dark/50 mt-8 opacity-0"
         >
           07 . 09 . 2026
         </p>

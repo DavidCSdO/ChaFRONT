@@ -5,6 +5,15 @@ import { Environment, Float, Instance, Instances, Lightformer } from "@react-thr
 import { useRef, useMemo } from "react";
 import * as THREE from "three";
 
+// Suppress THREE.Clock deprecation warning from R3F internals
+if (typeof console !== "undefined") {
+  const originalWarn = console.warn;
+  console.warn = (...args) => {
+    if (typeof args[0] === "string" && args[0].includes("THREE.Clock")) return;
+    originalWarn(...args);
+  };
+}
+
 import { useThree } from "@react-three/fiber";
 
 // Shape for the Heart
