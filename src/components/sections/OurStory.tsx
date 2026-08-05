@@ -78,10 +78,10 @@ export default function OurStory() {
       {/* Background Decor */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] md:w-[800px] md:h-[800px] bg-primary/40 rounded-full blur-3xl pointer-events-none"></div>
 
-      <div className="px-[8vw] md:px-0 md:pl-[20vw] md:pr-[20vw] flex flex-col md:flex-row items-center md:items-center gap-16 md:gap-[20vw] h-auto md:h-full w-full md:w-auto" ref={scrollContainerRef}>
+      <div className="px-[8vw] md:px-0 md:pl-[5vw] md:pr-[5vw] flex flex-col md:flex-row items-center gap-16 md:gap-[4vw] h-auto md:h-full w-full md:w-max" ref={scrollContainerRef}>
 
         {/* Intro */}
-        <div className="w-full md:min-w-[40vw] flex flex-col items-center md:items-start text-center md:text-left shrink-0 z-10">
+        <div className="w-full md:w-[25vw] flex flex-col items-center md:items-start text-center md:text-left shrink-0 z-10">
           <p className="font-sans text-sm tracking-[0.3em] uppercase text-forest mb-4 md:mb-6">A Essência</p>
           <h2 className="font-serif text-5xl md:text-7xl text-dark leading-tight">
             Nossa essência <br className="hidden md:block" />
