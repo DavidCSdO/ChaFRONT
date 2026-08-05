@@ -35,9 +35,9 @@ export default function OurStory() {
         scrollTrigger: {
           trigger: sectionRef.current,
           start: "top top",
-          end: () => `+=${scrollContainer.scrollWidth}`,
+          end: () => `+=${scrollContainer.scrollWidth - window.innerWidth}`,
           pin: true,
-          scrub: 1,
+          scrub: 0.1,
           invalidateOnRefresh: true,
         }
       });
