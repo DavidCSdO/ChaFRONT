@@ -219,21 +219,35 @@ export default function PolaroidWall() {
                   <h3 className="font-serif text-3xl text-dark mb-2">Pendurar Foto</h3>
                   
                   {/* Image Picker */}
-                  <div 
-                    onClick={() => fileInputRef.current?.click()}
-                    className="w-full aspect-square border-2 border-dashed border-dark/20 rounded-2xl bg-secondary/30 flex flex-col items-center justify-center cursor-pointer hover:bg-secondary/50 transition-colors overflow-hidden relative group"
-                  >
+                  <div className="w-full aspect-square border-2 border-dashed border-dark/20 rounded-2xl bg-secondary/30 flex flex-col items-center justify-center relative group overflow-hidden">
                     {previewUrl ? (
-                      <Image src={previewUrl} alt="Preview" fill className="object-cover" />
-                    ) : (
                       <>
+                        <Image src={previewUrl} alt="Preview" fill className="object-cover" />
+                        <button 
+                          type="button"
+                          onClick={() => {
+                            setFile(null);
+                            setPreviewUrl(null);
+                            if (fileInputRef.current) fileInputRef.current.value = "";
+                          }}
+                          className="absolute top-4 right-4 bg-dark/70 text-white p-2 rounded-full hover:bg-red-500 transition-colors z-20"
+                        >
+                          <X size={16} />
+                        </button>
+                      </>
+                    ) : (
+                      <div 
+                        className="absolute inset-0 flex flex-col items-center justify-center cursor-pointer hover:bg-secondary/50 transition-colors z-10"
+                        onClick={() => fileInputRef.current?.click()}
+                      >
                         <UploadCloud size={32} className="text-dark/40 mb-3 group-hover:scale-110 transition-transform" />
                         <span className="font-sans text-xs uppercase tracking-widest text-dark/50">Tocar para escolher foto</span>
-                      </>
+                      </div>
                     )}
                     <input 
                       type="file" 
                       accept="image/*" 
+                      capture="environment"
                       className="hidden" 
                       ref={fileInputRef}
                       onChange={handleFileChange}
