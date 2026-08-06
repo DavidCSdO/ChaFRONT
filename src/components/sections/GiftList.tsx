@@ -11,6 +11,7 @@ type Presente = {
   cores: string;
   escolhido: boolean;
   escolhido_por: string | null;
+  data_escolha?: string | null;
 };
 
 export default function GiftList() {
@@ -45,7 +46,11 @@ export default function GiftList() {
     setReserving(true);
     const { error } = await supabase
       .from("presentes")
-      .update({ escolhido: true, escolhido_por: guestName.trim() })
+      .update({ 
+        escolhido: true, 
+        escolhido_por: guestName.trim(),
+        data_escolha: new Date().toISOString()
+      })
       .eq("id", selectedGift.id)
       .eq("escolhido", false); 
       
@@ -73,7 +78,12 @@ export default function GiftList() {
     .filter(g => activeTab === "disponiveis" ? !g.escolhido : g.escolhido)
     .sort((a, b) => {
       if (activeTab === "recentes") {
-        return b.id - a.id; // Show latest by ID for recents
+        // Ordenar por data_escolha mais recente. 
+        // Se não tiver data (presentes antigos), usa o ID como fallback.
+        if (a.data_escolha && b.data_escolha) {
+          return new Date(b.data_escolha).getTime() - new Date(a.data_escolha).getTime();
+        }
+        return b.id - a.id; 
       }
       return 0; // Maintain original order for available
     });
