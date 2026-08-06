@@ -2,11 +2,12 @@
 
 import { useState } from "react";
 import { loginAction } from "@/app/admin/actions";
-import { Lock } from "lucide-react";
+import { Lock, Eye, EyeOff } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 export default function AdminLogin() {
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -39,13 +40,22 @@ export default function AdminLogin() {
         <p className="font-sans text-xs uppercase tracking-widest text-dark/40 mb-8">Digite a senha para acessar</p>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          <input 
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Senha"
-            className={`w-full px-4 py-3 bg-secondary/30 rounded-xl font-sans text-center text-dark outline-none border transition-colors ${error ? 'border-red-500' : 'border-dark/10 focus:border-gold'}`}
-          />
+          <div className="relative">
+            <input 
+              type={showPassword ? "text" : "password"}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Senha"
+              className={`w-full px-4 py-3 bg-secondary/30 rounded-xl font-sans text-center text-dark outline-none border transition-colors pr-12 ${error ? 'border-red-500' : 'border-dark/10 focus:border-gold'}`}
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-dark/40 hover:text-dark/70 transition-colors"
+            >
+              {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+            </button>
+          </div>
           {error && <p className="text-xs text-red-500 font-sans mt-1">Senha incorreta</p>}
           
           <button 

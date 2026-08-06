@@ -7,7 +7,7 @@ export const revalidate = 0; // Disable caching so it always fetches fresh data
 
 export default async function AdminDashboard() {
   const cookieStore = await cookies();
-  const isAuthenticated = cookieStore.get("admin_auth")?.value === "casamento2026";
+  const isAuthenticated = cookieStore.get("admin_auth")?.value === "195090";
 
   if (!isAuthenticated) {
     return <AdminLogin />;
@@ -31,7 +31,7 @@ export default async function AdminDashboard() {
   if (rsvpError) {
     return (
       <div className="p-8 text-center text-red-500 font-sans mt-20">
-        Erro ao carregar banco de dados. <br/>
+        Erro ao carregar banco de dados. <br />
         Você já rodou o script SQL no Supabase?
       </div>
     );
@@ -52,7 +52,7 @@ export default async function AdminDashboard() {
 
         {/* Overview Stats */}
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4 md:gap-6 mb-12">
-          
+
           <div className="bg-white p-5 rounded-3xl shadow-sm border border-dark/5 flex flex-col justify-between">
             <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center mb-4">
               <Users size={20} className="text-dark/60" />
@@ -62,7 +62,7 @@ export default async function AdminDashboard() {
               <p className="font-serif text-3xl text-forest">{confirmedCount}</p>
             </div>
           </div>
-          
+
           <div className="bg-white p-5 rounded-3xl shadow-sm border border-dark/5 flex flex-col justify-between">
             <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center mb-4">
               <Gift size={20} className="text-dark/60" />
@@ -72,7 +72,7 @@ export default async function AdminDashboard() {
               <p className="font-serif text-3xl text-dark">{giftsCount || 0}</p>
             </div>
           </div>
-          
+
           <div className="bg-white p-5 rounded-3xl shadow-sm border border-dark/5 flex flex-col justify-between">
             <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center mb-4">
               <ImageIcon size={20} className="text-dark/60" />
@@ -82,7 +82,7 @@ export default async function AdminDashboard() {
               <p className="font-serif text-3xl text-dark">{polaroidsCount || 0}</p>
             </div>
           </div>
-          
+
           <div className="bg-white p-5 rounded-3xl shadow-sm border border-dark/5 flex flex-col justify-between">
             <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center mb-4">
               <MessageSquare size={20} className="text-dark/60" />
@@ -92,7 +92,7 @@ export default async function AdminDashboard() {
               <p className="font-serif text-3xl text-dark">{messagesCount || 0}</p>
             </div>
           </div>
-          
+
           <div className="bg-white p-5 rounded-3xl shadow-sm border border-dark/5 flex flex-col justify-between col-span-2 md:col-span-1">
             <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center mb-4">
               <Eye size={20} className="text-dark/60" />
@@ -155,7 +155,7 @@ export default async function AdminDashboard() {
             </table>
           </div>
         </div>
-        
+
       </div>
     </div>
   );
