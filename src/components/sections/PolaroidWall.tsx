@@ -131,9 +131,12 @@ export default function PolaroidWall() {
         <div className="relative w-full min-h-[500px] mt-10">
           
           {/* Clothesline string */}
-          <div className="absolute top-10 left-0 right-0 h-[2px] bg-dark/20 w-full z-0" style={{ boxShadow: '0 5px 15px rgba(0,0,0,0.1)' }}></div>
+          <div className="absolute top-10 left-0 h-[2px] bg-dark/20 w-[200%] md:w-full z-0" style={{ boxShadow: '0 5px 15px rgba(0,0,0,0.1)' }}></div>
           
-          <div className="flex flex-wrap justify-center gap-10 md:gap-16 pt-12 relative z-10">
+          <div className="flex overflow-x-auto gap-10 md:gap-16 pt-12 pb-20 px-10 relative z-10 snap-x snap-mandatory" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+            <style dangerouslySetInnerHTML={{__html: `
+              .flex::-webkit-scrollbar { display: none; }
+            `}} />
             {polaroids.map((polaroid, i) => {
               // Random rotation between -6 and +6 degrees
               const rotation = (i % 2 === 0 ? -1 : 1) * ((i % 3) + 2);
@@ -145,7 +148,7 @@ export default function PolaroidWall() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: (i % 5) * 0.1 }}
-                  className="relative group cursor-pointer"
+                  className="relative group cursor-pointer shrink-0 snap-center"
                   style={{ transform: `rotate(${rotation}deg)` }}
                 >
                   {/* Pin / Peg */}
