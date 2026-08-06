@@ -61,6 +61,8 @@ export default function GiftList() {
     }
   };
 
+  const [activeTab, setActiveTab] = useState<"disponiveis" | "recentes">("disponiveis");
+
   const parseColors = (coresStr: string) => {
     if (!coresStr) return [];
     return coresStr.replace(/[{}]/g, "").split(",").map(c => c.trim()).filter(Boolean);
@@ -68,10 +70,12 @@ export default function GiftList() {
 
   const filteredGifts = gifts
     .filter(g => g.nome.toLowerCase().includes(search.toLowerCase()))
+    .filter(g => activeTab === "disponiveis" ? !g.escolhido : g.escolhido)
     .sort((a, b) => {
-      // Available first
-      if (a.escolhido === b.escolhido) return 0;
-      return a.escolhido ? 1 : -1;
+      if (activeTab === "recentes") {
+        return b.id - a.id; // Show latest by ID for recents
+      }
+      return 0; // Maintain original order for available
     });
 
   const total = gifts.length;
@@ -133,6 +137,23 @@ export default function GiftList() {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+
+        <div className="flex justify-center md:justify-start mb-10 relative z-10">
+          <div className="flex bg-dark/5 p-1.5 rounded-full w-fit border border-dark/5 shadow-inner">
+            <button 
+              onClick={() => setActiveTab("disponiveis")}
+              className={`px-6 py-2.5 rounded-full text-[10px] md:text-xs font-sans tracking-widest uppercase transition-all duration-300 ${activeTab === "disponiveis" ? "bg-white text-dark shadow-md font-medium" : "text-dark/50 hover:text-dark"}`}
+            >
+              Disponíveis
+            </button>
+            <button 
+              onClick={() => setActiveTab("recentes")}
+              className={`px-6 py-2.5 rounded-full text-[10px] md:text-xs font-sans tracking-widest uppercase transition-all duration-300 ${activeTab === "recentes" ? "bg-white text-dark shadow-md font-medium" : "text-dark/50 hover:text-dark"}`}
+            >
+              Recentes
+            </button>
           </div>
         </div>
 
