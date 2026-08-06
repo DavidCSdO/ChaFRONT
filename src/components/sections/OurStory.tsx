@@ -11,10 +11,10 @@ if (typeof window !== "undefined") {
 import Image from "next/image";
 
 const timelineData = [
-  { year: "2018", title: "O Primeiro Olhar", text: "Tudo começou num dia inesperado. Nossos olhares se cruzaram e, naquele momento, algo mudou para sempre. Foi o início de uma bela amizade que logo se tornaria amor.", image: "/carrocel/1.jpeg" },
-  { year: "2020", title: "O Pedido de Namoro", text: "Sob a luz das estrelas e com o coração batendo forte, decidimos que queríamos caminhar de mãos dadas. O 'sim' mais fácil de nossas vidas.", image: "/carrocel/2.jpeg" },
-  { year: "2023", title: "Nossa Primeira Casa", text: "Entre caixas e paredes recém-pintadas, começamos a construir nosso próprio mundinho. Cada cantinho tem um pouco de nós.", image: "/carrocel/3.jpeg" },
-  { year: "2025", title: "O Noivado", text: "Uma surpresa perfeita, lágrimas de alegria e a promessa de um amor para a vida inteira. O começo do nosso 'para sempre'.", image: "/carrocel/4.jpeg" }
+  { number: "O amor", title: "Encontro de Almas", text: "O amor não é apenas olhar um para o outro, mas sim olhar juntos na mesma direção. É encontrar na outra pessoa o lar que o coração sempre buscou.", image: "/carrocel/1.jpeg" },
+  { number: "é", title: "Cumplicidade", text: "Mais do que dividir os dias, é multiplicar as alegrias e dividir os fardos. A verdadeira parceria transforma a rotina em poesia.", image: "/carrocel/2.jpeg" },
+  { number: "Cumplicidade", title: "O Cuidado", text: "Amar é escolher a mesma pessoa todos os dias. É a arte de cuidar, de entender o silêncio e de celebrar até as menores vitórias.", image: "/carrocel/3.jpeg" },
+  { number: "Para Sempre", title: "Para Sempre", text: "O 'para sempre' não é um destino, é a construção diária que fazemos lado a lado. Hoje celebramos apenas o começo do nosso infinito.", image: "/carrocel/4.jpeg" }
 ];
 
 export default function OurStory() {
@@ -90,10 +90,10 @@ export default function OurStory() {
         
         {/* Intro */}
         <div className="text-center mb-24">
-          <p className="font-sans text-xs tracking-[0.3em] uppercase text-forest mb-4">Nossa História</p>
+          <p className="font-sans text-xs tracking-[0.3em] uppercase text-forest mb-4">A Essência</p>
           <h2 className="font-serif text-5xl md:text-7xl text-dark leading-tight">
-            Como chegamos <br className="hidden md:block" />
-            <span className="italic text-gold">até aqui</span>
+            Nossa essência <br className="hidden md:block" />
+            em <span className="italic text-gold">palavras</span>
           </h2>
         </div>
 
@@ -116,7 +116,7 @@ export default function OurStory() {
                   
                   {/* Content (Text) */}
                   <div className={`w-full md:w-5/12 pl-16 md:pl-0 ${isLeft ? "md:pr-16 md:text-right" : "md:pl-16 md:text-left"} mb-8 md:mb-0`}>
-                    <div className="font-script text-4xl md:text-5xl text-champagne mb-2">{item.year}</div>
+                    <div className="font-script text-4xl md:text-5xl text-champagne mb-2">{item.number}</div>
                     <h3 className="font-serif text-2xl md:text-3xl text-dark mb-4">{item.title}</h3>
                     <p className="font-sans text-sm md:text-base text-dark/70 leading-relaxed">
                       {item.text}
