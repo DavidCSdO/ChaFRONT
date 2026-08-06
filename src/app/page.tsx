@@ -1,7 +1,6 @@
 import Loader from "@/components/sections/Loader";
 import Navbar from "@/components/layout/Navbar";
 import PageTracker from "@/components/PageTracker";
-import HeroScene from "@/components/3d/HeroScene";
 import Hero from "@/components/sections/Hero";
 import OurStory from "@/components/sections/OurStory";
 import TheBigDay from "@/components/sections/TheBigDay";
@@ -21,27 +20,17 @@ export default function Home() {
       <PageTracker />
       <Loader />
       <Navbar />
-      <div className="relative z-10 w-full overflow-hidden">
-        {/* The 3D scene is absolute and encompasses Hero and OurStory ONLY */}
-        <div className="absolute inset-0 z-0">
-          <HeroScene />
-        </div>
-
-        <Hero />
-        <OurStory />
-      </div>
-        
-      <div className="relative z-20 bg-primary w-full">
-        <TheBigDay />
-          <Schedule />
-          <DressCode />
-          <Gallery />
-          <Guestbook />
-          <GiftList />
-          <RSVP />
-          <PolaroidWall />
-        <Footer />
-      </div>
+      <Hero />
+      <OurStory />
+      <TheBigDay />
+      <Schedule />
+      <DressCode />
+      <Gallery />
+      <Guestbook />
+      <GiftList />
+      <RSVP />
+      <PolaroidWall />
+      <Footer />
       <BackToTop />
     </main>
   );
