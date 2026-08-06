@@ -38,7 +38,7 @@ function FallingItem({ type, startPos, easterEggActive, triggerEasterEgg }: any)
   const { viewport } = useThree();
   const speed = useMemo(() => Math.random() * 0.005 + 0.005, []);
   const rotSpeed = useMemo(() => [Math.random() * 0.05, Math.random() * 0.05, Math.random() * 0.05], []);
-  const scale = useMemo(() => (type === 'heart' ? 0.4 : 1), [type]);
+  const scale = useMemo(() => (type === 'heart' ? 0.2 : 0.5), [type]);
   
   // Interactions for Easter Egg
   const isEasterEgg = type === 'diamond';
@@ -107,7 +107,7 @@ import { useState } from "react";
 
 function SceneObjects() {
   const [easterEggActive, setEasterEggActive] = useState(false);
-  const count = 80;
+  const count = 150;
 
   const items = useMemo(() => {
     const temp = [];
@@ -163,13 +163,13 @@ function SceneObjects() {
 export default function HeroScene() {
   return (
     <div className="absolute inset-0 z-0">
-      <Canvas camera={{ position: [0, 0, 20], fov: 45 }} gl={{ antialias: true, alpha: true }}>
+      <Canvas dpr={[1, 1.5]} camera={{ position: [0, 0, 20], fov: 45 }} gl={{ antialias: false, alpha: true }}>
         <color attach="background" args={["#FDF6F5"]} />
         <ambientLight intensity={0.5} />
         <directionalLight position={[10, 10, 5]} intensity={1.5} color="#F4EAE8" />
         <directionalLight position={[-10, -10, -5]} intensity={0.5} color="#D9A0A0" />
         
-        <Environment resolution={256}>
+        <Environment resolution={128}>
           <group rotation={[-Math.PI / 4, -0.3, 0]}>
             <Lightformer intensity={4} rotation-x={Math.PI / 2} position={[0, 5, -9]} scale={[10, 10, 1]} />
             <Lightformer intensity={2} rotation-y={Math.PI / 2} position={[-5, 1, -1]} scale={[20, 0.1, 1]} />
