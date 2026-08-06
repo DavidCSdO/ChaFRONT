@@ -78,12 +78,14 @@ export default function GiftList() {
     .filter(g => activeTab === "disponiveis" ? !g.escolhido : g.escolhido)
     .sort((a, b) => {
       if (activeTab === "recentes") {
-        // Ordenar por data_escolha mais recente. 
-        // Se não tiver data (presentes antigos), usa o ID como fallback.
-        if (a.data_escolha && b.data_escolha) {
-          return new Date(b.data_escolha).getTime() - new Date(a.data_escolha).getTime();
+        const timeA = a.data_escolha ? new Date(a.data_escolha).getTime() : 0;
+        const timeB = b.data_escolha ? new Date(b.data_escolha).getTime() : 0;
+        
+        if (timeA !== timeB) {
+          return timeB - timeA; // Most recent dates first
         }
-        return b.id - a.id; 
+        
+        return b.id - a.id; // Fallback to ID descending if both missing dates or same exact time
       }
       return 0; // Maintain original order for available
     });
