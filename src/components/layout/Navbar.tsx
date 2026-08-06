@@ -11,6 +11,17 @@ export default function Navbar() {
   const tooltipRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
+
+  useEffect(() => {
     gsap.fromTo(
       navRef.current,
       { y: -100, opacity: 0 },
@@ -75,13 +86,15 @@ export default function Navbar() {
 
       {/* Sidebar Overlay */}
       <div
+        data-lenis-prevent="true"
         className={`fixed inset-0 bg-dark/20 backdrop-blur-sm z-50 transition-opacity duration-500 ${isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
         onClick={() => setIsOpen(false)}
       ></div>
 
       {/* Sidebar */}
       <div
-        className={`fixed top-0 left-0 h-full w-[90vw] max-w-[480px] bg-secondary z-50 transform transition-transform duration-700 ease-[cubic-bezier(0.77,0,0.175,1)] flex flex-col shadow-2xl border-r border-dark/5 ${isOpen ? "translate-x-0" : "-translate-x-full"}`}
+        data-lenis-prevent="true"
+        className={`fixed top-0 left-0 h-full w-[90vw] max-w-[480px] bg-secondary z-50 transform transition-transform duration-700 ease-[cubic-bezier(0.77,0,0.175,1)] flex flex-col shadow-2xl border-r border-dark/5 overscroll-contain ${isOpen ? "translate-x-0" : "-translate-x-full"}`}
       >
         <div className="flex items-center justify-between px-8 md:px-12 py-8 border-b border-dark/5">
           <div className="w-16 md:w-20 aspect-[2/1] opacity-90 relative">
@@ -104,7 +117,6 @@ export default function Navbar() {
               className={`group flex items-baseline gap-4 w-fit transition-all duration-700 ease-[cubic-bezier(0.77,0,0.175,1)] ${isOpen ? 'translate-x-0 opacity-100' : '-translate-x-8 opacity-0'}`}
               style={{ transitionDelay: `${isOpen ? 150 + index * 50 : 0}ms` }}
             >
-              <span className="font-sans text-[10px] md:text-xs text-dark/30 tracking-widest">{link.id}</span>
               <span className="font-serif text-3xl md:text-4xl text-dark group-hover:text-gold group-hover:translate-x-3 transition-all duration-300">
                 {link.label}
               </span>
