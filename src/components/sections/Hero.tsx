@@ -2,7 +2,6 @@
 
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
-import HeroScene from "@/components/3d/HeroScene";
 import Image from "next/image";
 
 export default function Hero() {
@@ -34,9 +33,6 @@ export default function Hero() {
 
   return (
     <section className="relative w-full h-screen overflow-hidden">
-      {/* 3D Background */}
-      <HeroScene />
-
       {/* Foreground Content */}
       <div className="relative z-10 flex flex-col items-center justify-center w-full h-full text-center pointer-events-none">
 

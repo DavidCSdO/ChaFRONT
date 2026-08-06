@@ -80,7 +80,7 @@ export default function OurStory() {
   }, []);
 
   return (
-    <section ref={sectionRef} id="historia" className="w-full bg-secondary relative py-32 overflow-hidden">
+    <section ref={sectionRef} id="historia" className="w-full py-32 relative overflow-hidden bg-transparent">
       
       {/* Background Decor */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/40 rounded-full blur-3xl pointer-events-none translate-x-1/2 -translate-y-1/2"></div>

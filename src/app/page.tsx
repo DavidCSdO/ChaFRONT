@@ -1,5 +1,7 @@
 import Loader from "@/components/sections/Loader";
 import Navbar from "@/components/layout/Navbar";
+import PageTracker from "@/components/PageTracker";
+import HeroScene from "@/components/3d/HeroScene";
 import Hero from "@/components/sections/Hero";
 import OurStory from "@/components/sections/OurStory";
 import TheBigDay from "@/components/sections/TheBigDay";
@@ -16,19 +18,29 @@ import BackToTop from "@/components/layout/BackToTop";
 export default function Home() {
   return (
     <main className="relative bg-primary overflow-x-hidden w-full max-w-[100vw]">
+      <PageTracker />
       <Loader />
       <Navbar />
-      <Hero />
-      <OurStory />
-      <TheBigDay />
-      <Schedule />
-      <DressCode />
-      <Gallery />
-      <Guestbook />
-      <GiftList />
-      <RSVP />
-      <PolaroidWall />
-      <Footer />
+      <div className="fixed inset-0 z-0">
+        <HeroScene />
+      </div>
+
+      <div className="relative z-10 w-full">
+        <Hero />
+        <OurStory />
+        
+        <div className="relative z-20 bg-primary w-full">
+          <TheBigDay />
+          <Schedule />
+          <DressCode />
+          <Gallery />
+          <Guestbook />
+          <GiftList />
+          <RSVP />
+          <PolaroidWall />
+          <Footer />
+        </div>
+      </div>
       <BackToTop />
     </main>
   );

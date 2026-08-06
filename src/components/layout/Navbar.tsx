@@ -88,6 +88,8 @@ export default function Navbar() {
           <a href="#o-grande-dia" onClick={() => setIsOpen(false)} className="font-sans text-3xl md:text-4xl text-dark hover:text-gold transition-colors duration-300">O Grande Dia</a>
           <a href="#cronograma" onClick={() => setIsOpen(false)} className="font-sans text-3xl md:text-4xl text-dark hover:text-gold transition-colors duration-300">Cronograma</a>
           <a href="#galeria" onClick={() => setIsOpen(false)} className="font-sans text-3xl md:text-4xl text-dark hover:text-gold transition-colors duration-300">Galeria</a>
+          <a href="#dresscode" onClick={() => setIsOpen(false)} className="font-sans text-3xl md:text-4xl text-dark hover:text-gold transition-colors duration-300">Dress Code</a>
+          <a href="#polaroids" onClick={() => setIsOpen(false)} className="font-sans text-3xl md:text-4xl text-dark hover:text-gold transition-colors duration-300">Varal de Lembranças</a>
           <a href="#mensagens" onClick={() => setIsOpen(false)} className="font-sans text-3xl md:text-4xl text-dark hover:text-gold transition-colors duration-300">Mensagens</a>
           <a href="#lista-de-presentes" onClick={() => setIsOpen(false)} className="font-sans text-3xl md:text-4xl text-dark hover:text-gold transition-colors duration-300">Lista de Presentes</a>
         </div>
@@ -95,7 +97,9 @@ export default function Navbar() {
         <div className="px-10 py-12 border-t border-dark/5">
           <p className="font-sans text-[10px] font-bold tracking-widest uppercase text-dark/40 mb-4">[ CONTATO ]</p>
           <p className="font-sans text-sm text-dark/70 mb-1">cardosodavid92@gmail.com</p>
-          <p className="font-sans text-sm text-dark/70">+55 (24) 9 99292-8110</p>
+          <p className="font-sans text-sm text-dark/70 mb-8">+55 (24) 9 99292-8110</p>
+          
+          <a href="/admin/convidados" className="font-sans text-[10px] uppercase tracking-widest text-dark/30 hover:text-gold transition-colors">Acesso Restrito</a>
         </div>
       </div>
     </>

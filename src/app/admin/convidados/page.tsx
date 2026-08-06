@@ -1,17 +1,37 @@
 import { supabase } from "@/lib/supabase";
+import { cookies } from "next/headers";
+import AdminLogin from "@/components/admin/AdminLogin";
+import { Users, Gift, Image as ImageIcon, MessageSquare, Eye } from "lucide-react";
 
 export const revalidate = 0; // Disable caching so it always fetches fresh data
 
-export default async function AdminConvidados() {
-  const { data: rsvps, error } = await supabase
-    .from("rsvp")
-    .select("*")
-    .order("created_at", { ascending: false });
+export default async function AdminDashboard() {
+  const cookieStore = await cookies();
+  const isAuthenticated = cookieStore.get("admin_auth")?.value === "casamento2026";
 
-  if (error) {
+  if (!isAuthenticated) {
+    return <AdminLogin />;
+  }
+
+  // Fetch all stats in parallel
+  const [
+    { data: rsvps, error: rsvpError },
+    { count: giftsCount },
+    { count: polaroidsCount },
+    { count: messagesCount },
+    { count: pageViewsCount }
+  ] = await Promise.all([
+    supabase.from("rsvp").select("*").order("created_at", { ascending: false }),
+    supabase.from("gifts").select('*', { count: 'exact', head: true }).eq('escolhido', true),
+    supabase.from("polaroids").select('*', { count: 'exact', head: true }),
+    supabase.from("guestbook").select('*', { count: 'exact', head: true }),
+    supabase.from("page_views").select('*', { count: 'exact', head: true })
+  ]);
+
+  if (rsvpError) {
     return (
       <div className="p-8 text-center text-red-500 font-sans mt-20">
-        Erro ao carregar confirmações: {error.message}. <br/>
+        Erro ao carregar banco de dados. <br/>
         Você já rodou o script SQL no Supabase?
       </div>
     );
@@ -22,34 +42,74 @@ export default async function AdminConvidados() {
 
   return (
     <div className="min-h-screen bg-secondary p-8 md:p-16 pt-32 md:pt-32">
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-7xl mx-auto">
         <h1 className="font-serif text-4xl md:text-5xl text-dark mb-4">
-          Painel de <span className="italic text-gold">Convidados</span>
+          Centro de <span className="italic text-gold">Controle</span>
         </h1>
         <p className="font-sans text-dark/60 mb-10">
-          Visualize aqui todas as confirmações de presença do seu evento.
+          Visão geral de tudo que está acontecendo no seu site de casamento.
         </p>
 
-        {/* Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-          <div className="bg-white p-6 rounded-3xl shadow-sm border border-dark/5">
-            <p className="font-sans text-xs tracking-widest uppercase text-dark/40 mb-2">Total de Respostas</p>
-            <p className="font-serif text-4xl text-dark">{rsvps?.length || 0}</p>
+        {/* Overview Stats */}
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-4 md:gap-6 mb-12">
+          
+          <div className="bg-white p-5 rounded-3xl shadow-sm border border-dark/5 flex flex-col justify-between">
+            <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center mb-4">
+              <Users size={20} className="text-dark/60" />
+            </div>
+            <div>
+              <p className="font-sans text-[10px] tracking-widest uppercase text-dark/40 mb-1">Confirmados</p>
+              <p className="font-serif text-3xl text-forest">{confirmedCount}</p>
+            </div>
           </div>
-          <div className="bg-white p-6 rounded-3xl shadow-sm border border-dark/5">
-            <p className="font-sans text-xs tracking-widest uppercase text-forest mb-2">Confirmados</p>
-            <p className="font-serif text-4xl text-forest">{confirmedCount}</p>
+          
+          <div className="bg-white p-5 rounded-3xl shadow-sm border border-dark/5 flex flex-col justify-between">
+            <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center mb-4">
+              <Gift size={20} className="text-dark/60" />
+            </div>
+            <div>
+              <p className="font-sans text-[10px] tracking-widest uppercase text-dark/40 mb-1">Presentes</p>
+              <p className="font-serif text-3xl text-dark">{giftsCount || 0}</p>
+            </div>
           </div>
-          <div className="bg-white p-6 rounded-3xl shadow-sm border border-dark/5">
-            <p className="font-sans text-xs tracking-widest uppercase text-red-800/50 mb-2">Não irão comparecer</p>
-            <p className="font-serif text-4xl text-red-800/80">{declinedCount}</p>
+          
+          <div className="bg-white p-5 rounded-3xl shadow-sm border border-dark/5 flex flex-col justify-between">
+            <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center mb-4">
+              <ImageIcon size={20} className="text-dark/60" />
+            </div>
+            <div>
+              <p className="font-sans text-[10px] tracking-widest uppercase text-dark/40 mb-1">Fotos</p>
+              <p className="font-serif text-3xl text-dark">{polaroidsCount || 0}</p>
+            </div>
           </div>
+          
+          <div className="bg-white p-5 rounded-3xl shadow-sm border border-dark/5 flex flex-col justify-between">
+            <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center mb-4">
+              <MessageSquare size={20} className="text-dark/60" />
+            </div>
+            <div>
+              <p className="font-sans text-[10px] tracking-widest uppercase text-dark/40 mb-1">Mensagens</p>
+              <p className="font-serif text-3xl text-dark">{messagesCount || 0}</p>
+            </div>
+          </div>
+          
+          <div className="bg-white p-5 rounded-3xl shadow-sm border border-dark/5 flex flex-col justify-between col-span-2 md:col-span-1">
+            <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center mb-4">
+              <Eye size={20} className="text-dark/60" />
+            </div>
+            <div>
+              <p className="font-sans text-[10px] tracking-widest uppercase text-dark/40 mb-1">Acessos</p>
+              <p className="font-serif text-3xl text-dark">{pageViewsCount || 0}</p>
+            </div>
+          </div>
+
         </div>
 
-        {/* Table */}
-        <div className="bg-white rounded-3xl shadow-sm border border-dark/5 overflow-hidden">
+        {/* Table RSVP */}
+        <h2 className="font-serif text-2xl text-dark mb-4">Lista de RSVP ({rsvps?.length || 0})</h2>
+        <div className="bg-white rounded-3xl shadow-sm border border-dark/5 overflow-hidden mb-12">
           <div className="overflow-x-auto">
-            <table className="w-full text-left font-sans text-sm">
+            <table className="w-full text-left font-sans text-sm whitespace-nowrap">
               <thead className="bg-primary/30 border-b border-dark/5 text-xs uppercase tracking-widest text-dark/50">
                 <tr>
                   <th className="px-6 py-4 font-medium">Nome</th>
