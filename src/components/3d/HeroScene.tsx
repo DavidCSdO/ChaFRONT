@@ -54,8 +54,8 @@ function FallingItem({ type, startPos, easterEggActive, triggerEasterEgg }: any)
     } else {
       // Normal falling
       ref.current.position.y -= speed;
-      if (ref.current.position.y < -15) {
-        ref.current.position.y = 15;
+      if (ref.current.position.y < -30) {
+        ref.current.position.y = 30;
         ref.current.position.x = (Math.random() - 0.5) * 20;
       }
       ref.current.rotation.x += rotSpeed[0];
@@ -114,7 +114,7 @@ function SceneObjects() {
     const types = ['confetti', 'ring', 'heart', 'confetti', 'heart', 'confetti'];
     for (let i = 0; i < count; i++) {
       const x = (Math.random() - 0.5) * 20;
-      const y = Math.random() * 20;
+      const y = Math.random() * 60 - 30;
       const z = (Math.random() - 0.5) * 10 - 5;
       const type = types[i % types.length];
       temp.push({ id: i, type, position: [x, y, z] });

@@ -21,11 +21,12 @@ export default function Home() {
       <PageTracker />
       <Loader />
       <Navbar />
-      <div className="fixed inset-0 z-0">
-        <HeroScene />
-      </div>
-
       <div className="relative z-10 w-full">
+        {/* The 3D scene is absolute and encompasses Hero and OurStory */}
+        <div className="absolute inset-0 z-0">
+          <HeroScene />
+        </div>
+
         <Hero />
         <OurStory />
         
