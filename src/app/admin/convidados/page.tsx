@@ -7,7 +7,7 @@ export const revalidate = 0; // Disable caching so it always fetches fresh data
 
 export default async function AdminDashboard() {
   const cookieStore = await cookies();
-  const isAuthenticated = cookieStore.get("admin_auth")?.value === "195090";
+  const isAuthenticated = cookieStore.get("admin_auth")?.value === "true";
 
   if (!isAuthenticated) {
     return <AdminLogin />;

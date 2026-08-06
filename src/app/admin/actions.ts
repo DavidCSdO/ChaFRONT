@@ -6,7 +6,7 @@ export async function loginAction(password: string) {
   if (password === "195090") {
     // Next.js 15 requires awaiting cookies()
     const cookieStore = await cookies();
-    cookieStore.set("admin_auth", password, { 
+    cookieStore.set("admin_auth", "true", { 
       path: "/", 
       secure: process.env.NODE_ENV === "production", 
       httpOnly: true,
