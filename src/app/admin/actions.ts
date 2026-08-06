@@ -3,7 +3,7 @@
 import { cookies } from "next/headers";
 
 export async function loginAction(password: string) {
-  if (password === "casamento2026") {
+  if (password === "195090") {
     // Next.js 15 requires awaiting cookies()
     const cookieStore = await cookies();
     cookieStore.set("admin_auth", password, { 
