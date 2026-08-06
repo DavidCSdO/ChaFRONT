@@ -154,11 +154,10 @@ export default function PolaroidWall() {
                   {/* Polaroid Card */}
                   <div className="bg-white p-4 pb-12 md:pb-16 shadow-[0_15px_30px_rgba(0,0,0,0.1)] hover:shadow-[0_25px_50px_rgba(0,0,0,0.15)] transition-all duration-500 w-[240px] md:w-[280px] origin-top group-hover:-rotate-2 group-hover:scale-105">
                     <div className="relative w-full aspect-square bg-gray-100 overflow-hidden">
-                      <Image 
+                      <img 
                         src={polaroid.image_url} 
                         alt={polaroid.guest_name}
-                        fill
-                        className="object-cover"
+                        className="w-full h-full object-cover absolute inset-0"
                       />
                     </div>
                     <div className="mt-4 text-center">
@@ -222,7 +221,7 @@ export default function PolaroidWall() {
                   <div className="w-full aspect-square border-2 border-dashed border-dark/20 rounded-2xl bg-secondary/30 flex flex-col items-center justify-center relative group overflow-hidden">
                     {previewUrl ? (
                       <>
-                        <Image src={previewUrl} alt="Preview" fill className="object-cover" />
+                        <img src={previewUrl} alt="Preview" className="w-full h-full object-cover absolute inset-0" />
                         <button 
                           type="button"
                           onClick={() => {
