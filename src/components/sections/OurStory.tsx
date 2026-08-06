@@ -9,63 +9,70 @@ if (typeof window !== "undefined") {
 }
 
 import Image from "next/image";
-import { Mouse } from "lucide-react";
 
-const quotesData = [
-  { number: "O amor", title: "Encontro de Almas", text: "O amor não é apenas olhar um para o outro, mas sim olhar juntos na mesma direção. É encontrar na outra pessoa o lar que o coração sempre buscou.", image: "/carrocel/1.jpeg" },
-  { number: "é", title: "Cumplicidade", text: "Mais do que dividir os dias, é multiplicar as alegrias e dividir os fardos. A verdadeira parceria transforma a rotina em poesia.", image: "/carrocel/2.jpeg" },
-  { number: "Cumplicidade", title: "O Cuidado", text: "Amar é escolher a mesma pessoa todos os dias. É a arte de cuidar, de entender o silêncio e de celebrar até as menores vitórias.", image: "/carrocel/3.jpeg" },
-  { number: "Para Sempre", title: "Para Sempre", text: "O 'para sempre' não é um destino, é a construção diária que fazemos lado a lado. Hoje celebramos apenas o começo do nosso infinito.", image: "/carrocel/4.jpeg" }
+const timelineData = [
+  { year: "2018", title: "O Primeiro Olhar", text: "Tudo começou num dia inesperado. Nossos olhares se cruzaram e, naquele momento, algo mudou para sempre. Foi o início de uma bela amizade que logo se tornaria amor.", image: "/carrocel/1.jpeg" },
+  { year: "2020", title: "O Pedido de Namoro", text: "Sob a luz das estrelas e com o coração batendo forte, decidimos que queríamos caminhar de mãos dadas. O 'sim' mais fácil de nossas vidas.", image: "/carrocel/2.jpeg" },
+  { year: "2023", title: "Nossa Primeira Casa", text: "Entre caixas e paredes recém-pintadas, começamos a construir nosso próprio mundinho. Cada cantinho tem um pouco de nós.", image: "/carrocel/3.jpeg" },
+  { year: "2025", title: "O Noivado", text: "Uma surpresa perfeita, lágrimas de alegria e a promessa de um amor para a vida inteira. O começo do nosso 'para sempre'.", image: "/carrocel/4.jpeg" }
 ];
 
 export default function OurStory() {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const lineRef = useRef<HTMLDivElement>(null);
+  const lineFillRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!sectionRef.current || !scrollContainerRef.current) return;
+    if (!sectionRef.current || !lineRef.current || !lineFillRef.current) return;
 
     const ctx = gsap.context(() => {
-      const mm = gsap.matchMedia();
-
-      // Desktop: Horizontal Scroll
-      mm.add("(min-width: 768px)", () => {
-        const scrollContainer = scrollContainerRef.current!;
-        const getScrollAmount = () => -(scrollContainer.scrollWidth - window.innerWidth);
-
-        gsap.to(scrollContainer, {
-          x: getScrollAmount,
-          ease: "none",
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top top",
-            end: () => `+=${scrollContainer.scrollWidth - window.innerWidth}`,
-            pin: true,
-            scrub: 0.1,
-            invalidateOnRefresh: true,
-          }
-        });
+      // Animate central line
+      gsap.to(lineFillRef.current, {
+        height: "100%",
+        ease: "none",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top center",
+          end: "bottom center",
+          scrub: true,
+        }
       });
 
-      // Mobile: Vertical Scroll with Fade Up
-      mm.add("(max-width: 767px)", () => {
-        const cards = gsap.utils.toArray(".story-card");
-        
-        cards.forEach((card: unknown) => {
-          gsap.fromTo(card as HTMLElement,
-            { opacity: 0, y: 80 },
+      // Animate cards
+      const cards = gsap.utils.toArray(".timeline-card");
+      cards.forEach((card: any, i) => {
+        const isLeft = i % 2 === 0;
+        gsap.fromTo(card, 
+          { opacity: 0, x: isLeft ? -50 : 50 },
+          {
+            opacity: 1,
+            x: 0,
+            duration: 1,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: card,
+              start: "top 80%",
+            }
+          }
+        );
+
+        // Animate dot
+        const dot = card.querySelector(".timeline-dot");
+        if (dot) {
+          gsap.fromTo(dot,
+            { scale: 0, backgroundColor: "transparent" },
             {
-              opacity: 1,
-              y: 0,
-              duration: 1,
-              ease: "power3.out",
+              scale: 1,
+              backgroundColor: "var(--color-gold)",
+              duration: 0.5,
+              ease: "back.out(2)",
               scrollTrigger: {
-                trigger: card as HTMLElement,
-                start: "top 85%",
+                trigger: card,
+                start: "top center",
               }
             }
           );
-        });
+        }
       });
     }, sectionRef);
 
@@ -73,56 +80,69 @@ export default function OurStory() {
   }, []);
 
   return (
-    <section ref={sectionRef} id="historia" className="min-h-screen md:h-screen w-full bg-secondary overflow-hidden flex flex-col md:flex-row items-center relative py-20 md:py-0">
-
+    <section ref={sectionRef} id="historia" className="w-full bg-secondary relative py-32 overflow-hidden">
+      
       {/* Background Decor */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] md:w-[800px] md:h-[800px] bg-primary/40 rounded-full blur-3xl pointer-events-none"></div>
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/40 rounded-full blur-3xl pointer-events-none translate-x-1/2 -translate-y-1/2"></div>
+      <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-primary/40 rounded-full blur-3xl pointer-events-none -translate-x-1/2 translate-y-1/2"></div>
 
-      <div className="px-[8vw] md:px-0 md:pl-[5vw] md:pr-[5vw] flex flex-col md:flex-row items-center gap-16 md:gap-[4vw] h-auto md:h-full w-full md:w-max" ref={scrollContainerRef}>
-
+      <div className="max-w-6xl mx-auto px-6 md:px-8 relative z-10">
+        
         {/* Intro */}
-        <div className="w-full md:w-[25vw] flex flex-col items-center md:items-start text-center md:text-left shrink-0 z-10">
-          <p className="font-sans text-sm tracking-[0.3em] uppercase text-forest mb-4 md:mb-6">A Essência</p>
+        <div className="text-center mb-24">
+          <p className="font-sans text-xs tracking-[0.3em] uppercase text-forest mb-4">Nossa História</p>
           <h2 className="font-serif text-5xl md:text-7xl text-dark leading-tight">
-            Nossa essência <br className="hidden md:block" />
-            em <span className="italic text-gold">palavras</span>
+            Como chegamos <br className="hidden md:block" />
+            <span className="italic text-gold">até aqui</span>
           </h2>
-
-          <div className="mt-8 md:mt-12 flex items-center gap-3 text-dark/40 animate-pulse">
-            <Mouse size={18} />
-            <span className="font-sans text-[10px] md:text-[11px] tracking-widest uppercase">Role para baixo para navegar</span>
-          </div>
         </div>
 
-        {/* Timeline Cards */}
-        {quotesData.map((item, i) => (
-          <div key={i} className="story-card w-full max-w-[380px] md:max-w-none md:w-[450px] shrink-0 relative group mx-auto md:mx-0">
-            {/* Glassmorphism Card */}
-            <div className="relative bg-primary/40 md:bg-primary/20 backdrop-blur-xl border border-primary/50 rounded-2xl overflow-hidden shadow-2xl shadow-dark/5 transition-transform duration-700 md:group-hover:-translate-y-4">
-
-              <div className="w-full aspect-[4/3] relative overflow-hidden">
-                <Image
-                  src={item.image}
-                  alt={item.title}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 450px"
-                  className="object-cover md:group-hover:scale-105 transition-transform duration-1000"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-dark/40 to-transparent"></div>
-              </div>
-
-              <div className="p-6 md:p-14 pt-6 md:pt-8">
-                <div className="font-script text-5xl md:text-6xl text-champagne mb-4 md:mb-6 opacity-80">{item.number}</div>
-                <h3 className="font-sans text-lg md:text-xl font-medium tracking-wide text-dark mb-3 md:mb-4 uppercase">{item.title}</h3>
-                <p className="font-sans text-sm md:text-base text-dark/70 leading-relaxed font-light">
-                  {item.text}
-                </p>
-              </div>
-
-            </div>
+        {/* Timeline Container */}
+        <div className="relative w-full pb-20">
+          
+          {/* Central Line */}
+          <div ref={lineRef} className="absolute left-6 md:left-1/2 top-0 bottom-0 w-[2px] bg-dark/10 -translate-x-1/2 md:translate-x-[-1px]">
+            <div ref={lineFillRef} className="absolute top-0 left-0 w-full bg-gold h-0 shadow-[0_0_10px_rgba(212,175,55,0.5)]"></div>
           </div>
-        ))}
 
+          <div className="flex flex-col gap-16 md:gap-32">
+            {timelineData.map((item, i) => {
+              const isLeft = i % 2 === 0;
+              return (
+                <div key={i} className={`timeline-card relative flex flex-col md:flex-row items-center justify-between w-full ${isLeft ? "md:flex-row" : "md:flex-row-reverse"}`}>
+                  
+                  {/* Timeline Dot */}
+                  <div className="absolute left-6 md:left-1/2 top-0 md:top-1/2 w-4 h-4 rounded-full border-2 border-gold bg-secondary z-20 -translate-x-1/2 md:translate-x-[-50%] md:-translate-y-1/2 timeline-dot shadow-md"></div>
+                  
+                  {/* Content (Text) */}
+                  <div className={`w-full md:w-5/12 pl-16 md:pl-0 ${isLeft ? "md:pr-16 md:text-right" : "md:pl-16 md:text-left"} mb-8 md:mb-0`}>
+                    <div className="font-script text-4xl md:text-5xl text-champagne mb-2">{item.year}</div>
+                    <h3 className="font-serif text-2xl md:text-3xl text-dark mb-4">{item.title}</h3>
+                    <p className="font-sans text-sm md:text-base text-dark/70 leading-relaxed">
+                      {item.text}
+                    </p>
+                  </div>
+
+                  {/* Content (Image) */}
+                  <div className={`w-full md:w-5/12 pl-16 md:pl-0 ${isLeft ? "md:pl-16" : "md:pr-16"}`}>
+                    <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl shadow-dark/10 group">
+                      <Image
+                        src={item.image}
+                        alt={item.title}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-1000"
+                        sizes="(max-width: 768px) 100vw, 50vw"
+                      />
+                      <div className="absolute inset-0 bg-dark/10 group-hover:bg-transparent transition-colors duration-500"></div>
+                    </div>
+                  </div>
+
+                </div>
+              );
+            })}
+          </div>
+
+        </div>
       </div>
     </section>
   );

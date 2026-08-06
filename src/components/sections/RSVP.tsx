@@ -2,14 +2,39 @@
 
 import { useState } from "react";
 import { Send, CheckCircle2 } from "lucide-react";
+import { supabase } from "@/lib/supabase";
 
 export default function RSVP() {
-  const [status, setStatus] = useState<"idle" | "submitting" | "success">("idle");
+  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+  const [formData, setFormData] = useState({
+    nome: "",
+    comparecer: "sim",
+    restricao: "",
+    musica: ""
+  });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus("submitting");
-    setTimeout(() => setStatus("success"), 1500);
+    
+    const { error } = await supabase
+      .from("rsvp")
+      .insert([
+        {
+          nome: formData.nome,
+          comparecer: formData.comparecer === "sim",
+          restricao_alimentar: formData.restricao,
+          musica: formData.musica
+        }
+      ]);
+
+    if (error) {
+      console.error(error);
+      setStatus("error");
+      alert("Houve um erro ao confirmar presença. Tente novamente.");
+    } else {
+      setStatus("success");
+    }
   };
 
   return (
@@ -55,6 +80,8 @@ export default function RSVP() {
                 <input 
                   type="text" 
                   required
+                  value={formData.nome}
+                  onChange={(e) => setFormData({...formData, nome: e.target.value})}
                   className="w-full bg-primary/50 border border-dark/10 rounded-full px-6 py-4 font-sans text-sm text-dark outline-none focus:border-gold transition-colors"
                   placeholder="Como gostaria de ser chamado?"
                 />
@@ -62,7 +89,11 @@ export default function RSVP() {
 
               <div>
                 <label className="block font-sans text-xs tracking-widest uppercase text-dark/70 mb-2 pl-4">Irá Comparecer?</label>
-                <select className="w-full bg-primary/50 border border-dark/10 rounded-full px-6 py-4 font-sans text-sm text-dark outline-none focus:border-gold transition-colors appearance-none cursor-pointer">
+                <select 
+                  value={formData.comparecer}
+                  onChange={(e) => setFormData({...formData, comparecer: e.target.value})}
+                  className="w-full bg-primary/50 border border-dark/10 rounded-full px-6 py-4 font-sans text-sm text-dark outline-none focus:border-gold transition-colors appearance-none cursor-pointer"
+                >
                   <option value="sim">Sim, com certeza!</option>
                   <option value="nao">Infelizmente não poderei.</option>
                 </select>
@@ -72,8 +103,10 @@ export default function RSVP() {
                 <label className="block font-sans text-xs tracking-widest uppercase text-dark/70 mb-2 pl-4">Restrição Alimentar?</label>
                 <input 
                   type="text" 
+                  value={formData.restricao}
+                  onChange={(e) => setFormData({...formData, restricao: e.target.value})}
                   className="w-full bg-primary/50 border border-dark/10 rounded-full px-6 py-4 font-sans text-sm text-dark outline-none focus:border-gold transition-colors"
-                  placeholder="Nenhuma"
+                  placeholder="Ex: Vegetariano, alergia a frutos do mar"
                 />
               </div>
 
@@ -81,6 +114,8 @@ export default function RSVP() {
                 <label className="block font-sans text-xs tracking-widest uppercase text-dark/70 mb-2 pl-4">Música Sugerida</label>
                 <input 
                   type="text" 
+                  value={formData.musica}
+                  onChange={(e) => setFormData({...formData, musica: e.target.value})}
                   className="w-full bg-primary/50 border border-dark/10 rounded-full px-6 py-4 font-sans text-sm text-dark outline-none focus:border-gold transition-colors"
                   placeholder="Aquela que não pode faltar!"
                 />
