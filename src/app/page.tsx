@@ -21,17 +21,18 @@ export default function Home() {
       <PageTracker />
       <Loader />
       <Navbar />
-      <div className="relative z-10 w-full">
-        {/* The 3D scene is absolute and encompasses Hero and OurStory */}
+      <div className="relative z-10 w-full overflow-hidden">
+        {/* The 3D scene is absolute and encompasses Hero and OurStory ONLY */}
         <div className="absolute inset-0 z-0">
           <HeroScene />
         </div>
 
         <Hero />
         <OurStory />
+      </div>
         
-        <div className="relative z-20 bg-primary w-full">
-          <TheBigDay />
+      <div className="relative z-20 bg-primary w-full">
+        <TheBigDay />
           <Schedule />
           <DressCode />
           <Gallery />
@@ -39,8 +40,7 @@ export default function Home() {
           <GiftList />
           <RSVP />
           <PolaroidWall />
-          <Footer />
-        </div>
+        <Footer />
       </div>
       <BackToTop />
     </main>
