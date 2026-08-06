@@ -56,7 +56,7 @@ function FallingItem({ type, startPos, easterEggActive, triggerEasterEgg }: any)
       ref.current.position.y -= speed;
       if (ref.current.position.y < -30) {
         ref.current.position.y = 30;
-        ref.current.position.x = (Math.random() - 0.5) * 20;
+        ref.current.position.x = (Math.random() - 0.5) * 40;
       }
       ref.current.rotation.x += rotSpeed[0];
       ref.current.rotation.y += rotSpeed[1];
@@ -107,13 +107,13 @@ import { useState } from "react";
 
 function SceneObjects() {
   const [easterEggActive, setEasterEggActive] = useState(false);
-  const count = 40;
+  const count = 80;
 
   const items = useMemo(() => {
     const temp = [];
     const types = ['confetti', 'ring', 'heart', 'confetti', 'heart', 'confetti'];
     for (let i = 0; i < count; i++) {
-      const x = (Math.random() - 0.5) * 20;
+      const x = (Math.random() - 0.5) * 40;
       const y = Math.random() * 60 - 30;
       const z = (Math.random() - 0.5) * 10 - 5;
       const type = types[i % types.length];
@@ -163,7 +163,7 @@ function SceneObjects() {
 export default function HeroScene() {
   return (
     <div className="absolute inset-0 z-0">
-      <Canvas camera={{ position: [0, 0, 10], fov: 45 }} gl={{ antialias: true, alpha: true }}>
+      <Canvas camera={{ position: [0, 0, 20], fov: 45 }} gl={{ antialias: true, alpha: true }}>
         <color attach="background" args={["#FDF6F5"]} />
         <ambientLight intensity={0.5} />
         <directionalLight position={[10, 10, 5]} intensity={1.5} color="#F4EAE8" />
