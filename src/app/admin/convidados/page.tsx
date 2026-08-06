@@ -22,9 +22,9 @@ export default async function AdminDashboard() {
     { count: pageViewsCount }
   ] = await Promise.all([
     supabase.from("rsvp").select("*").order("created_at", { ascending: false }),
-    supabase.from("gifts").select('*', { count: 'exact', head: true }).eq('escolhido', true),
+    supabase.from("presentes").select('*', { count: 'exact', head: true }).eq('escolhido', true),
     supabase.from("polaroids").select('*', { count: 'exact', head: true }),
-    supabase.from("guestbook").select('*', { count: 'exact', head: true }),
+    supabase.from("mensagens").select('*', { count: 'exact', head: true }),
     supabase.from("page_views").select('*', { count: 'exact', head: true })
   ]);
 
